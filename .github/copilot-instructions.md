@@ -2,23 +2,31 @@
 
 ## Repository state
 
-- This repository is still a scaffold. The only tracked project files today are `README.md`, `.gitignore`, and this instructions file.
-- `README.md` now defines the intended product as a Slack/Discord/Teams-style group chat application with server, channel, and member-based communication.
-- There is no committed application code, package manifest, build config, test config, or deployment config yet. Do not assume a framework, runtime, or package manager until one is checked in.
-- The repository now includes additional Copilot-facing assets in `.github/instructions/`, `.github/agents/`, `.github/skills/`, `.github/hooks/`, and `AGENTS.md`.
+- This repository now includes application code and structure:
+  - `be/` (backend, Node.js/TypeScript/Express/tRPC)
+  - `fe/` (frontend, Vite/React/TypeScript)
+  - `infrastructure/` (Docker Compose, infra config)
+  - `contracts/` (OpenAPI contracts, Isabel-governed)
+  - `plans/` (plan register and execution plans)
+- Local build, test, and dev commands exist in both `be/` and `fe/` (see their READMEs).
+- Docker Compose infrastructure is provided for local full-stack development.
+- Contract governance and Isabel agent rules are enforced for all changes to `contracts/`.
+- Copilot-facing assets live in `.github/instructions/`, `.github/agents/`, `.github/skills/`, `.github/hooks/`, and `AGENTS.md`.
 
 ## Build, test, and lint commands
 
-- No checked-in build, test, or lint commands exist yet.
-- Before proposing commands, inspect newly added manifests or task runners in the repository itself instead of defaulting to `npm`, `yarn`, `pnpm`, `make`, or another tool by assumption.
-- Repo-level automation now exists in GitHub Actions for markdown line-ending checks and spelling checks, but there are still no application build or test commands checked in.
+- Build, test, and dev commands are now present in both `be/` and `fe/`:
+  - Backend: see `be/README.md` for `npm install`, `npm run dev`, and related commands.
+  - Frontend: see `fe/README.md` for `npm install`, `npm run dev`, and related commands.
+- Docker Compose can be used for local full-stack development (see `infrastructure/`).
+- Repo-level automation exists in GitHub Actions for markdown line-ending checks and spelling checks.
 
 ## High-level architecture
 
-- No implementation architecture is present yet, but the target stack has been chosen and should guide initial setup work.
-- Frontend target stack: `vite`, `react`, `typescript`, `zustand`, `zod`, `@tanstack/react-query`, `trpc`, and `clerk`.
-- Backend target stack: `node`, `typescript`, `express`, `trpc`, `drizzle`, `postgresql`, and `clerk`.
-- Until code is checked in, treat these as the intended technologies rather than inferred implementation details.
+- The repository is organized into backend (`be/`), frontend (`fe/`), infrastructure (`infrastructure/`), contracts (`contracts/`), and plans (`plans/`).
+- Frontend stack: Vite, React, TypeScript, Zustand, Zod, TanStack Query, tRPC, Clerk.
+- Backend stack: Node.js, TypeScript, Express, tRPC, Drizzle, PostgreSQL, Clerk.
+- See each service's README for details and commands.
 
 ## Product scope currently defined
 
@@ -29,16 +37,14 @@
 - Server owners can CRUD server channels.
 - Server members can chat with the rest of the members through a server channel.
 
-## Key conventions already visible in the repo
+## Key conventions in the repo
 
-- `.gitignore` is a broad JavaScript/TypeScript and web-app template. It already anticipates Node dependencies, TypeScript build artifacts, coverage output, ESLint/stylelint caches, and framework outputs such as Next.js, Nuxt, Gatsby, SvelteKit, and VitePress.
-- Environment files follow the pattern `.env*` ignored with `!.env.example` preserved. If environment variables are introduced, keep a committed `.env.example` as the documented template.
-- Because the repository has not established module boundaries or app layers yet, keep any newly introduced structure explicit in committed config and docs so later sessions can discover the intended stack quickly.
-- When the first implementation files are added, prefer aligning them with the documented frontend/backend split instead of introducing a different stack by default.
-- Formatting and line-ending behavior is now anchored by `.editorconfig` and `.gitattributes`; follow those defaults instead of editor-specific conventions.
-- VS Code workspace recommendations live in `.vscode/extensions.json`, and repository-wide editor defaults live in `.vscode/settings.json`.
-- GitHub collaboration tooling now includes `.github/pull_request_template.md`, `.github/workflows/check-line-endings.yml`, `.github/workflows/codespell.yml`, and `.github/workflows/copilot-setup-steps.yml`.
-- Prefer the targeted files in `.github/instructions/` for stack-specific guidance before falling back to generic advice.
-- Use the specialist files in `.github/agents/` when a task is primarily frontend, backend, security, or planning oriented.
-- Use the reusable workflows in `.github/skills/` for architecture and feature-planning tasks instead of recreating those prompts ad hoc.
-- The optional hook in `.github/hooks/secrets-scanner/` is intended to reduce accidental secret commits as the project starts using Clerk, database URLs, and other credentials.
+- `.gitignore` covers Node, TypeScript, and web-app artifacts. Node modules and build outputs are ignored; `.env.example` is committed as a template.
+- Environment files: `.env*` is ignored, `.env.example` is committed for each service. Do not commit real `.env` or `db.env` files.
+- Formatting and line-ending behavior is anchored by `.editorconfig` and `.gitattributes`.
+- VS Code workspace recommendations: `.vscode/extensions.json` and `.vscode/settings.json`.
+- GitHub collaboration tooling: PR template, markdown line-ending check, spelling check, Copilot setup steps.
+- Use `.github/instructions/` for stack-specific guidance, `.github/agents/` for agent roles, `.github/skills/` for reusable workflows.
+- Only Isabel may modify `contracts/`; all other agents must hand off contract changes.
+- All agent commits must follow `AGENT_COMMIT_CONVENTIONS.md`.
+- The optional `.github/hooks/secrets-scanner/` helps prevent secret leaks.

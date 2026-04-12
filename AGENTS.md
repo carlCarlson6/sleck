@@ -12,9 +12,16 @@ This repository includes GitHub Copilot assets tailored for a Slack/Discord/Team
 
 - `.github/copilot-instructions.md` contains the project-wide baseline rules.
 - `.github/instructions/` contains focused instructions for stack, security, accessibility, and testing.
-- `.github/agents/` contains specialist agents: Danny (planning/orchestration), Aitor (frontend), Salva (backend), Vicente (devops), and Juanjo (changes review).
+- `.github/agents/` contains specialist agents: Danny (planning/orchestration), Aitor (frontend), Salva (backend), Vicente (devops), Juanjo (changes review), and Isabel (contracts).
 - `.github/skills/` contains reusable workflows for architecture and feature slicing.
 - `.github/hooks/` contains optional Copilot hook integrations, including a secrets scanner.
+
+## Agent roles and contract rules
+
+- **Isabel** is the only agent allowed to directly modify files under `contracts/` (including all `*.yml` and `*.yaml` files). All other agents must hand off contract changes to Isabel and may not edit or commit changes to `contracts/` directly.
+- All agent commits must follow the conventions in `AGENT_COMMIT_CONVENTIONS.md`.
+- Commit subject: `[agent_name] | brief description`
+- Commit body: plan name, agent in charge, task description
 
 ## Working conventions
 
@@ -23,3 +30,5 @@ This repository includes GitHub Copilot assets tailored for a Slack/Discord/Team
 - Treat auth, authorization, private server visibility, and membership boundaries as first-class concerns.
 - Prefer strongly typed boundaries with Zod and TypeScript instead of implicit contracts.
 - Update `README.md` and Copilot assets when the stack, architecture, or workflow changes materially.
+
+See `plans/`, `contracts/`, and `AGENT_COMMIT_CONVENTIONS.md` for more on agent responsibilities and plan tracking.
