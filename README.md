@@ -95,7 +95,7 @@ This repository is currently in the planning and scaffolding stage. The product 
 
 | Plan name                              | Status    |
 |----------------------------------------|-----------|
-| Initial repository scaffolding plan     | Approved  |
+| Initial repository scaffolding plan     | Completed |
 
 See `plans/` for full plan details and status updates.
 

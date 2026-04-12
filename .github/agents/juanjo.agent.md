@@ -32,3 +32,7 @@ Review changes for security, build issues, configuration problems, code quality 
 - Explain impact in terms of user safety, product trust, developer experience, and system stability
 - Suggest concrete fixes, not just warnings
 - Provide context for tradeoffs when multiple solutions exist
+
+## Commit conventions for plan-driven work
+
+When executing an approved plan, you **must** commit changes according to the repository conventions in `AGENT_COMMIT_CONVENTIONS.md`. Do not invent new formats. The commit subject and body must follow the required structure, including plan name, agent, and task description. This ensures traceability and consistency across all agent-driven work.

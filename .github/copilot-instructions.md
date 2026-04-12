@@ -39,6 +39,10 @@
 
 ## Key conventions in the repo
 
+### Commit conventions for plan-driven work
+
+When agents execute an approved plan, they **must** commit changes according to the repository conventions in `AGENT_COMMIT_CONVENTIONS.md`. Do not invent new formats. The commit subject and body must follow the required structure, including plan name, agent, and task description. This ensures traceability and consistency across all agent-driven work.
+
 - `.gitignore` covers Node, TypeScript, and web-app artifacts. Node modules and build outputs are ignored; `.env.example` is committed as a template.
 - Environment files: `.env*` is ignored, `.env.example` is committed for each service. Do not commit real `.env` or `db.env` files.
 - Formatting and line-ending behavior is anchored by `.editorconfig` and `.gitattributes`.
