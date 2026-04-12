@@ -5,6 +5,7 @@
 - This repository is still a scaffold. The only tracked project files today are `README.md`, `.gitignore`, and this instructions file.
 - `README.md` now defines the intended product as a Slack/Discord/Teams-style group chat application with server, channel, and member-based communication.
 - There is no committed application code, package manifest, build config, test config, or deployment config yet. Do not assume a framework, runtime, or package manager until one is checked in.
+- The repository now includes additional Copilot-facing assets in `.github/instructions/`, `.github/agents/`, `.github/skills/`, `.github/hooks/`, and `AGENTS.md`.
 
 ## Build, test, and lint commands
 
@@ -37,3 +38,7 @@
 - Formatting and line-ending behavior is now anchored by `.editorconfig` and `.gitattributes`; follow those defaults instead of editor-specific conventions.
 - VS Code workspace recommendations live in `.vscode/extensions.json`, and repository-wide editor defaults live in `.vscode/settings.json`.
 - GitHub collaboration tooling now includes `.github/pull_request_template.md`, `.github/workflows/check-line-endings.yml`, `.github/workflows/codespell.yml`, and `.github/workflows/copilot-setup-steps.yml`.
+- Prefer the targeted files in `.github/instructions/` for stack-specific guidance before falling back to generic advice.
+- Use the specialist files in `.github/agents/` when a task is primarily frontend, backend, security, or planning oriented.
+- Use the reusable workflows in `.github/skills/` for architecture and feature-planning tasks instead of recreating those prompts ad hoc.
+- The optional hook in `.github/hooks/secrets-scanner/` is intended to reduce accidental secret commits as the project starts using Clerk, database URLs, and other credentials.
