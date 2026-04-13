@@ -11,6 +11,7 @@ export const servers = pgTable('servers', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: text('name').notNull(),
   ownerId: uuid('owner_id').notNull().references(() => users.id),
+  visibility: text('visibility').notNull(), // 'public' | 'private'
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 

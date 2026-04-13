@@ -1,6 +1,8 @@
 import { router } from './context';
+import { serversRouter } from './servers';
 
-// Empty router for now, ready for later extension
-export const appRouter = router({});
+export const appRouter = router({
+  servers: serversRouter,
+});
 
 export type AppRouter = typeof appRouter;
