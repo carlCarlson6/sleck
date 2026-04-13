@@ -1,9 +1,8 @@
 import express from 'express';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { appRouter } from './trpc/root';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import dotenvSafe from 'dotenv-safe';
+dotenvSafe.config();
 
 const app = express();
 const port = process.env.PORT || 4000;
