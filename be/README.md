@@ -41,7 +41,9 @@ You can also run the backend as part of the full stack using Docker Compose:
 
 - `src/` - TypeScript source code
   - `index.ts` - App entrypoint
-  - `trpc/` - tRPC routers (empty root for now)
+  - `trpc/` - tRPC routers and context
+- `db/` - Drizzle ORM schema and migrations
+- `test/` - Test helpers and test suites
 - `scripts/` - Local dev scripts
 - `.env.example` - Example environment variables
 
@@ -51,9 +53,8 @@ You can also run the backend as part of the full stack using Docker Compose:
 - tRPC (API layer)
 - Drizzle ORM (PostgreSQL)
 - Zod (validation)
-- dotenv (env handling)
+- dotenv-safe (env validation)
 
 ## Notes
-- This is a scaffold only. No business logic or database wiring is present yet.
-- Designed for later integration with Clerk, Drizzle, and tRPC routers.
+- Foundation includes DB wiring, schema, env validation, and test tooling.
 - No root workspace is used; backend is self-contained in `be/`.
