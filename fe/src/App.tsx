@@ -7,7 +7,7 @@ import { LoadingLayout } from './layouts/LoadingLayout';
 import { EmptyStateLayout } from './layouts/EmptyStateLayout';
 // 
 // TODO: Replace with real auth state
-const isSignedIn = false;
+const isSignedIn = true; // TEMP: always signed in for demo
 const isLoading = false;
 const isEmpty = false;
 

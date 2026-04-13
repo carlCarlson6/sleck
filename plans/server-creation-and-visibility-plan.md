@@ -1,5 +1,13 @@
 # Server creation and visibility plan
 
+## Execution status
+
+- Overall status: **In Progress**
+- Data and business rules — **Done** (**Salva**)
+- Frontend flow — **Done** (**Aitor**)
+- Contract update — **Pending** (**Isabel**)
+- Review — **Pending** (**Juanjo**)
+
 ## Problem statement
 
 Sleck needs the first product-level entity: a user must be able to create a server, choose whether it is public or private, and become its owner immediately.
