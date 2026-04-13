@@ -2,12 +2,12 @@
 
 ## Execution status
 
-- Overall status: **In progress**
+- Overall status: **Completed**
 - Backend foundation — **Completed** (**Salva**)
 - Frontend foundation — **Completed** (**Aitor**)
 - Contract baseline — **Completed** (**Isabel**)
-- Developer workflow updates — **In progress** (**Vicente**)
-- Cross-check and review — **Pending** (**Juanjo**)
+- Developer workflow updates — **Completed** (**Vicente**)
+- Cross-check and review — **Completed** (**Juanjo**)
 
 ## Problem statement
 
