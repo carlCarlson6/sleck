@@ -38,18 +38,54 @@ Review the documented product scope against the current implementation, identify
 
 ## Task breakdown
 
-1. **Core application foundation plan** — **Salva**, **Aitor**, **Vicente**, **Juanjo**
-   - Establish auth, data, API, client providers, and test scaffolding needed by every feature.
-2. **Server creation and visibility plan** — **Salva**, **Aitor**, **Isabel**, **Juanjo**
-   - Ship server creation with owner membership and public/private visibility.
-3. **Public server discovery and join plan** — **Salva**, **Aitor**, **Isabel**, **Juanjo**
-   - Add discovery and self-join for public servers without leaking private servers.
-4. **Private server invites and membership plan** — **Salva**, **Aitor**, **Isabel**, **Juanjo**
-   - Add invite issuance, acceptance, and private membership controls.
-5. **Channel management plan** — **Salva**, **Aitor**, **Isabel**, **Juanjo**
-   - Add owner-only channel CRUD and member channel listing.
-6. **Channel messaging plan** — **Salva**, **Aitor**, **Isabel**, **Juanjo**
-   - Add channel message read/send flows for members.
+1. **Core foundation backend and data slice** — **Salva**
+   - Establish auth, persistence, tRPC primitives, and backend test scaffolding needed by every feature.
+2. **Core foundation frontend shell slice** — **Aitor**
+   - Replace the starter UI with the signed-in shell, providers, and navigation primitives needed by every feature.
+3. **Core foundation developer workflow slice** — **Vicente**
+   - Update Docker and environment workflows to support database, backend, and frontend development after the foundation lands.
+4. **Core foundation review slice** — **Juanjo**
+   - Review the foundation for auth, config, and security regressions before feature work begins.
+5. **Server creation backend slice** — **Salva**
+   - Ship server creation, owner membership, and server visibility persistence.
+6. **Server creation frontend slice** — **Aitor**
+   - Add the create-server flow and owner-facing server navigation.
+7. **Server creation contract slice** — **Isabel**
+   - Update governed contracts for server creation and server summary payloads.
+8. **Server creation review slice** — **Juanjo**
+   - Review creation flow validation and public/private visibility handling.
+9. **Public discovery backend slice** — **Salva**
+   - Add public server listing and join behavior without leaking private servers.
+10. **Public discovery frontend slice** — **Aitor**
+   - Add discovery UI, join states, and post-join navigation.
+11. **Public discovery contract slice** — **Isabel**
+   - Update governed contracts for discovery and join responses.
+12. **Public discovery review slice** — **Juanjo**
+   - Review privacy leakage and unauthorized join paths.
+13. **Private invite backend slice** — **Salva**
+   - Add private invite issuance, acceptance, revocation, and membership rules.
+14. **Private invite frontend slice** — **Aitor**
+   - Add invite management and invite acceptance flows.
+15. **Private invite contract slice** — **Isabel**
+   - Update governed contracts for private invite and membership flows.
+16. **Private invite review slice** — **Juanjo**
+   - Review invite secrecy, revocation behavior, and private access boundaries.
+17. **Channel management backend slice** — **Salva**
+   - Add channel CRUD and membership-gated listing.
+18. **Channel management frontend slice** — **Aitor**
+   - Add channel list and owner-only management controls.
+19. **Channel management contract slice** — **Isabel**
+   - Update governed contracts for channel CRUD and listing.
+20. **Channel management review slice** — **Juanjo**
+   - Review owner/member/non-member separation for channel actions.
+21. **Channel messaging backend slice** — **Salva**
+   - Add message read/send procedures with channel-bound authorization.
+22. **Channel messaging frontend slice** — **Aitor**
+   - Add message timeline and composer flows.
+23. **Channel messaging contract slice** — **Isabel**
+   - Update governed contracts for message read and create flows.
+24. **Channel messaging review slice** — **Juanjo**
+   - Review message access control, rendering safety, and failure handling.
 
 ## Dependencies
 
