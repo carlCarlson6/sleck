@@ -1,17 +1,8 @@
-import * as React from 'react';
-import { trpc } from '../api/trpc';
-import { useAppState } from '../state/appState';
-
-type Server = {
-  id: string;
-  name: string;
-  ownerId: string;
-  visibility: 'public' | 'private';
-  createdAt: string | Date;
-};
+import { trpc } from './api/trpc';
+import { useAppState } from './state/appState';
 
 export function ServerListNav() {
-  const { data: servers, isLoading, isError } = trpc.servers.listMine.useQuery<Server[]>();
+  const { data: servers, isLoading, isError } = trpc.servers.listMine.useQuery();
   const { currentServerId, setCurrentServerId } = useAppState();
 
   if (isLoading) return <nav aria-label="Servers">Loading servers...</nav>;

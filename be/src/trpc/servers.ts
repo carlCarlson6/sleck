@@ -1,12 +1,12 @@
 import { z } from 'zod';
 import { protectedProcedure, router } from './context';
 import { db } from '../db';
-import { servers, memberships } from '../db/schema';
+import { memberships, servers, users } from '../db/schema';
 import { eq } from 'drizzle-orm';
 
 // Zod schemas
 export const createServerInput = z.object({
-  name: z.string().min(1).max(64),
+  name: z.string().trim().min(1).max(64),
   visibility: z.enum(['public', 'private']),
 });
 
@@ -27,28 +27,44 @@ export const serversRouter = router({
     .mutation(async ({ ctx, input }) => {
       // Authz: user must be authenticated (enforced by protectedProcedure)
       const userId = ctx.user!.id;
-      // Insert server
-      const [server] = await db
-        .insert(servers)
-        .values({
-          name: input.name,
-          ownerId: userId,
-          visibility: input.visibility,
-        })
-        .returning();
-      // Insert owner membership
-      await db.insert(memberships).values({
-        userId,
-        serverId: server.id,
-        role: 'owner',
+      return db.transaction(async (tx) => {
+        const existingUser = await tx
+          .select({ id: users.id })
+          .from(users)
+          .where(eq(users.id, userId))
+          .limit(1);
+
+        if (existingUser.length === 0) {
+          await tx.insert(users).values({
+            id: userId,
+            email: `${userId}@sleck.local`,
+            displayName: `Demo User ${userId.slice(0, 8)}`,
+          });
+        }
+
+        const [server] = await tx
+          .insert(servers)
+          .values({
+            name: input.name,
+            ownerId: userId,
+            visibility: input.visibility,
+          })
+          .returning();
+
+        await tx.insert(memberships).values({
+          userId,
+          serverId: server.id,
+          role: 'owner',
+        });
+
+        return {
+          id: server.id,
+          name: server.name,
+          ownerId: server.ownerId,
+          visibility: server.visibility as 'public' | 'private',
+          createdAt: server.createdAt,
+        };
       });
-      return {
-        id: server.id,
-        name: server.name,
-        ownerId: server.ownerId,
-        visibility: server.visibility as 'public' | 'private',
-        createdAt: server.createdAt,
-      };
     }),
 
   listMine: protectedProcedure

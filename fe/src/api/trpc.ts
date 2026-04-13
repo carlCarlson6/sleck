@@ -1,8 +1,8 @@
 // src/api/trpc.ts
 import { createTRPCReact } from '@trpc/react-query';
-// TODO: Wire AppRouter type from backend when available
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const trpc = createTRPCReact<any>();
+import type { AppRouter } from '../../../be/src/trpc/root';
+
+export const trpc = createTRPCReact<AppRouter>();
 
 export function getTrpcBaseUrl() {
   return import.meta.env.VITE_API_URL || 'http://localhost:4000';

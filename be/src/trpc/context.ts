@@ -1,4 +1,5 @@
-import { inferAsyncReturnType, initTRPC } from '@trpc/server';
+import { initTRPC } from '@trpc/server';
+import type { inferAsyncReturnType } from '@trpc/server';
 import { db } from '../db';
 import type { Request, Response } from 'express';
 

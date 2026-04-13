@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { trpc } from '../api/trpc';
+import { trpc } from './api/trpc';
 
 type ServerInput = {
   name: string;
@@ -59,8 +59,8 @@ export function ServerCreateForm({ onSuccess }: { onSuccess?: () => void }) {
           Private (invite only)
         </label>
       </fieldset>
-      <button type="submit" disabled={createServer.isLoading}>
-        {createServer.isLoading ? 'Creating…' : 'Create server'}
+      <button type="submit" disabled={createServer.isPending}>
+        {createServer.isPending ? 'Creating…' : 'Create server'}
       </button>
       {createServer.error && <div role="alert" style={{ color: 'red' }}>{createServer.error.message}</div>}
     </form>

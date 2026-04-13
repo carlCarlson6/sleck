@@ -2,11 +2,11 @@
 
 ## Execution status
 
-- Overall status: **In Progress**
+- Overall status: **Completed**
 - Data and business rules — **Done** (**Salva**)
 - Frontend flow — **Done** (**Aitor**)
 - Contract update — **Done** (**Isabel**)
-- Review — **Pending** (**Juanjo**)
+- Review — **Done** (**Juanjo**)
 
 ## Problem statement
 
