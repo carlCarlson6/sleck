@@ -1,5 +1,14 @@
 # Core application foundation plan
 
+## Execution status
+
+- Overall status: **In progress**
+- Backend foundation — **Completed** (**Salva**)
+- Frontend foundation — **In progress** (**Aitor**)
+- Contract baseline — **Pending** (**Isabel**)
+- Developer workflow updates — **Pending** (**Vicente**)
+- Cross-check and review — **Pending** (**Juanjo**)
+
 ## Problem statement
 
 The repository has only frontend and backend scaffolding. Before shipping any product feature, Sleck needs a shared application foundation for authentication, persistence, typed API boundaries, frontend providers, and basic testing.
