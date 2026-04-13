@@ -3,8 +3,8 @@
 ## Execution status
 
 - Overall status: **In progress**
-- Backend foundation — **Completed** (**Salva**)
-- Frontend foundation — **In progress** (**Aitor**)
+- Backend foundation — **In progress** (**Salva**)
+- Frontend foundation — **Pending** (**Aitor**)
 - Contract baseline — **Pending** (**Isabel**)
 - Developer workflow updates — **Pending** (**Vicente**)
 - Cross-check and review — **Pending** (**Juanjo**)

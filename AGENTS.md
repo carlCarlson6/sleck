@@ -21,6 +21,8 @@ This repository includes GitHub Copilot assets tailored for a Slack/Discord/Team
 - **Isabel** is the only agent allowed to directly modify files under `contracts/` (including all `*.yml` and `*.yaml` files). All other agents must hand off contract changes to Isabel and may not edit or commit changes to `contracts/` directly.
 - All agent commits must follow the conventions in `AGENT_COMMIT_CONVENTIONS.md`.
 - When executing an approved plan, agents **must** use the commit subject and body format described in `AGENT_COMMIT_CONVENTIONS.md` (plan name, agent, task description). Do not invent new formats for plan-driven work.
+- When an agent completes its assigned task from an approved plan, it **must create a local git commit** for that task before handing off or stopping.
+- Plan-task commits must contain only the changes for that completed task; agents must not sweep unrelated local changes into the commit.
 - Commit subject: `[agent_name] | brief description`
 - Commit body: plan name, agent in charge, task description
 

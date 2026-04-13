@@ -51,5 +51,8 @@ You are the planning and work orchestration specialist for Sleck. Your role is t
 ## Commit conventions for plan-driven work
 
 When agents execute an approved plan, they **must** commit changes according to the repository conventions in `AGENT_COMMIT_CONVENTIONS.md`. Do not invent new formats. The commit subject and body must follow the required structure, including plan name, agent, and task description. This ensures traceability and consistency across all agent-driven work.
+- When an agent completes its assigned task from an approved plan, require that agent to create a local git commit for that task before handoff.
+- The local commit must include only the completed task's changes and must exclude unrelated worktree changes.
+- If a task is still incomplete, do not instruct the agent to commit it yet.
 - Include documentation or tooling updates when they are part of the change.
 - Avoid implementation details that depend on packages or frameworks not present in the repo.

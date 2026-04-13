@@ -43,6 +43,10 @@
 
 When agents execute an approved plan, they **must** commit changes according to the repository conventions in `AGENT_COMMIT_CONVENTIONS.md`. Do not invent new formats. The commit subject and body must follow the required structure, including plan name, agent, and task description. This ensures traceability and consistency across all agent-driven work.
 
+- When an agent completes its assigned task from an approved plan, it **must create a local git commit** for that task before handoff.
+- The commit must contain only the completed task's changes and must not include unrelated worktree changes.
+- If the task is not complete, the agent must not create the commit yet.
+
 - `.gitignore` covers Node, TypeScript, and web-app artifacts. Node modules and build outputs are ignored; `.env.example` is committed as a template.
 - Environment files: `.env*` is ignored, `.env.example` is committed for each service. Do not commit real `.env` or `db.env` files.
 - Formatting and line-ending behavior is anchored by `.editorconfig` and `.gitattributes`.
