@@ -32,10 +32,45 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a new server
+      operationId: createServer
+      tags: [servers]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateServerInput'
+      responses:
+        '201':
+          description: Server created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerSummary'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
     ServerSummary:
       type: object
+      required:
+        - id
+        - name
+        - ownerId
+        - visibility
+        - createdAt
       properties:
         id:
           type: string
@@ -45,9 +80,25 @@ components:
         ownerId:
           type: string
           format: uuid
+        visibility:
+          type: string
+          enum: [public, private]
         createdAt:
           type: string
           format: date-time
+    CreateServerInput:
+      type: object
+      required:
+        - name
+        - visibility
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        visibility:
+          type: string
+          enum: [public, private]
     ErrorResponse:
       type: object
       properties:

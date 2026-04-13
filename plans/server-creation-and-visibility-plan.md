@@ -5,7 +5,7 @@
 - Overall status: **In Progress**
 - Data and business rules — **Done** (**Salva**)
 - Frontend flow — **Done** (**Aitor**)
-- Contract update — **Pending** (**Isabel**)
+- Contract update — **Done** (**Isabel**)
 - Review — **Pending** (**Juanjo**)
 
 ## Problem statement
