@@ -1,8 +1,8 @@
+import './env';
 import express from 'express';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { appRouter } from './trpc/root';
-import dotenvSafe from 'dotenv-safe';
-dotenvSafe.config();
+import { createContext } from './trpc/context';
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -15,7 +15,7 @@ app.get('/health', (_req, res) => {
 // tRPC endpoint (empty router for now)
 app.use('/trpc', trpcExpress.createExpressMiddleware({
   router: appRouter,
-  createContext: () => ({}),
+  createContext,
 }));
 
 app.listen(port, () => {
