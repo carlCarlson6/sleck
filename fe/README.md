@@ -61,7 +61,7 @@ You can also run the frontend as part of the full stack using Docker Compose:
 
 ## Notes
 
-- This scaffold preserves the default Vite React starter UI for now.
+- The Vite React starter UI has been removed in favor of the Sleck application shell.
 - No product flows or backend wiring are implemented yet.
 - All baseline libraries are installed and ready for use.
 - For backend API and Clerk integration, see future tasks.
