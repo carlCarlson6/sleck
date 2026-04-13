@@ -1,6 +1,4 @@
-import type { ReactNode } from 'react';
-
-export function SignedOutLayout({ children }: { children?: ReactNode }) {
+export function SignedOutLayout({ children }: { children?: React.ReactNode }) {
   return (
     <div role="main" tabIndex={-1} style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div>

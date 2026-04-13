@@ -5,8 +5,7 @@ import { SignedInLayout } from './layouts/SignedInLayout';
 import { SignedOutLayout } from './layouts/SignedOutLayout';
 import { LoadingLayout } from './layouts/LoadingLayout';
 import { EmptyStateLayout } from './layouts/EmptyStateLayout';
-// import { useAppState } from './state/appState';
-
+// 
 // TODO: Replace with real auth state
 const isSignedIn = false;
 const isLoading = false;

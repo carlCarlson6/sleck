@@ -11,7 +11,11 @@ This is the backend service for Sleck, built with Node.js, TypeScript, Express, 
    ```sh
    npm install
    ```
-3. Start the backend in development mode:
+3. (Optional, for DB schema changes) Run Drizzle migrations:
+   ```sh
+   npm run migrate:push
+   ```
+4. Start the backend in development mode:
    ```sh
    npm run dev
    ```
@@ -31,6 +35,7 @@ You can also run the backend as part of the full stack using Docker Compose:
 
 - The backend will be available at [http://localhost:4000](http://localhost:4000)
 - The database will be available at `db:5432` inside the container
+- **Migrations:** The backend container does not auto-run Drizzle migrations. To apply DB schema changes, run `npm run migrate:push` inside the backend container or locally with the correct `DATABASE_URL`.
 
 ## Project Structure
 
