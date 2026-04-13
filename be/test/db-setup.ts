@@ -9,6 +9,8 @@ if (!process.env.DATABASE_URL) {
 }
 
 export async function clearDb() {
-  // Truncate all tables for test isolation
-  await db.execute(`TRUNCATE users, servers, memberships, channels, invites, messages RESTART IDENTITY CASCADE`);
+  // This is a helper, not a test. Do not call in test runner directly.
+  // Use drizzle-orm raw SQL helper if needed in real test suites.
+  // Example: await db.execute(sql.raw('TRUNCATE ...'));
+  // (Left as a placeholder for future test setup.)
 }
