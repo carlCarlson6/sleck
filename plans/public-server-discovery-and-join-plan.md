@@ -1,5 +1,13 @@
 # Public server discovery and join plan
 
+## Execution status
+
+- Overall status: **In Progress**
+- Discovery and join backend — **In Progress** (**Salva**)
+- Discovery UI — **Pending** (**Aitor**)
+- Contract update — **Pending** (**Isabel**)
+- Review — **Pending** (**Juanjo**)
+
 ## Problem statement
 
 Public servers must be discoverable and joinable by any eligible user, while private servers remain absent from discovery results and cannot be joined without invitation.
@@ -19,7 +27,7 @@ Public servers must be discoverable and joinable by any eligible user, while pri
 
 ## Task breakdown
 
-1. **Discovery and join backend** — **Salva**
+1. **Discovery and join backend** — **Salva** ✅ *(complete)*
    - Add public server listing and public server join procedures.
    - Enforce that private servers are excluded from all public discovery results.
    - Prevent duplicate memberships and joining when already a member.
