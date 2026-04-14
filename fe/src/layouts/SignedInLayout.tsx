@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ServerListNav } from '../ServerListNav';
 import { ServerCreateForm } from '../ServerCreateForm';
+import { ServerDiscovery } from '../ServerDiscovery';
 
 export function SignedInLayout({ children }: { children: React.ReactNode }) {
   const [showCreate, setShowCreate] = React.useState(false);
@@ -24,6 +25,9 @@ export function SignedInLayout({ children }: { children: React.ReactNode }) {
             <ServerCreateForm onSuccess={() => setShowCreate(false)} />
           </div>
         )}
+        <React.Suspense fallback={null}>
+          <ServerDiscovery />
+        </React.Suspense>
       </aside>
       <div style={{ flex: 1, minWidth: 0, padding: 24 }}>{children}</div>
     </div>

@@ -3,8 +3,8 @@
 ## Execution status
 
 - Overall status: **In Progress**
-- Discovery and join backend — **In Progress** (**Salva**)
-- Discovery UI — **Pending** (**Aitor**)
+- Discovery and join backend — **Done** (**Salva**)
+- Discovery UI — **In Progress** (**Aitor**)
 - Contract update — **Pending** (**Isabel**)
 - Review — **Pending** (**Juanjo**)
 
@@ -31,7 +31,7 @@ Public servers must be discoverable and joinable by any eligible user, while pri
    - Add public server listing and public server join procedures.
    - Enforce that private servers are excluded from all public discovery results.
    - Prevent duplicate memberships and joining when already a member.
-2. **Discovery UI** — **Aitor**
+2. **Discovery UI** — **Aitor** ✅
    - Add a discoverable server browsing view and join action.
    - Show clear joined, joinable, empty, and error states.
    - Route newly joined users into the server experience.
