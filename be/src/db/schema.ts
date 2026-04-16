@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, uuid, integer } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, timestamp, uuid, integer, unique } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -21,7 +21,10 @@ export const memberships = pgTable('memberships', {
   serverId: uuid('server_id').notNull().references(() => servers.id),
   role: text('role').notNull(), // 'owner', 'member', 'invitee'
   joinedAt: timestamp('joined_at').notNull().defaultNow(),
-});
+},
+(table) => ({
+  uniq: unique().on(table.userId, table.serverId),
+}));
 
 export const channels = pgTable('channels', {
   id: uuid('id').primaryKey().defaultRandom(),

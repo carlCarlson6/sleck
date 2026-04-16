@@ -113,7 +113,7 @@ describe('serversRouter', () => {
     const caller1 = appRouter.createCaller(mockUserContext(testUserId) as any);
     const caller2 = appRouter.createCaller(mockUserContext(otherUserId) as any);
     const priv = await caller1.servers.create({ name: 'Priv', visibility: 'private' });
-    await expect(caller2.servers.joinPublic({ serverId: priv.id })).rejects.toThrow(/SERVER_NOT_PUBLIC/);
+    await expect(caller2.servers.joinPublic({ serverId: priv.id })).rejects.toThrow(/SERVER_NOT_FOUND/);
   });
 
   it('rejects joining a nonexistent server', async () => {

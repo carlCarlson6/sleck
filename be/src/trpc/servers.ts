@@ -110,7 +110,7 @@ export const serversRouter = router({
     .output(serverOutput)
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.user!.id;
-      // Find server and check public
+      // Only allow joining if the server is public and exists, but do not leak private existence
       const [server] = await db
         .select({
           id: servers.id,
@@ -120,24 +120,23 @@ export const serversRouter = router({
           createdAt: servers.createdAt,
         })
         .from(servers)
-        .where(eq(servers.id, input.serverId));
+        .where(and(eq(servers.id, input.serverId), eq(servers.visibility, 'public')));
       if (!server) throw new Error('SERVER_NOT_FOUND');
-      if (server.visibility !== 'public') throw new Error('SERVER_NOT_PUBLIC');
-      // Check if already a member
-      const existing = await db
-        .select({ id: memberships.id, role: memberships.role })
-        .from(memberships)
-        .where(and(eq(memberships.serverId, server.id), eq(memberships.userId, userId)));
-      if (existing.length > 0) {
-        throw new Error('ALREADY_MEMBER');
-      }
-      // Ensure user exists before inserting membership
+      // Check if already a member (race-safe: try insert, catch unique error)
       await ensureUserExists(db, userId);
-      await db.insert(memberships).values({
-        userId,
-        serverId: server.id,
-        role: 'member',
-      });
+      try {
+        await db.insert(memberships).values({
+          userId,
+          serverId: server.id,
+          role: 'member',
+        });
+      } catch (err: any) {
+        // Drizzle/PG unique violation
+        if (err.code === '23505') {
+          throw new Error('ALREADY_MEMBER');
+        }
+        throw err;
+      }
       return {
         id: server.id,
         name: server.name,
