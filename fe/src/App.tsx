@@ -18,6 +18,14 @@ function AppShell() {
   const { currentServerId, setCurrentServerId } = useAppState();
   const { data: myServers, isLoading: isServersLoading, isError: isServersError } = trpc.servers.listMine.useQuery();
 
+  // Always call hooks unconditionally
+  React.useEffect(() => {
+    if (!currentServerId && myServers && myServers.length > 0) {
+      setCurrentServerId(myServers[0].id);
+    }
+  }, [currentServerId, myServers, setCurrentServerId]);
+
+  // UI state logic
   if (isLoading || isServersLoading) return <LoadingLayout />;
   if (!isSignedIn) return <SignedOutLayout />;
   if (isServersError) {
@@ -34,13 +42,6 @@ function AppShell() {
       </SignedInLayout>
     );
   }
-
-  // If currentServerId is not set but user has servers, select the first one
-  React.useEffect(() => {
-    if (!currentServerId && myServers && myServers.length > 0) {
-      setCurrentServerId(myServers[0].id);
-    }
-  }, [currentServerId, myServers, setCurrentServerId]);
 
   if (!currentServerId) {
     return <LoadingLayout />;
