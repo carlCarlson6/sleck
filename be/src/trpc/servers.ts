@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { TRPCError } from '@trpc/server';
 import { protectedProcedure, router } from './context';
 import { db } from '../db';
 import { memberships, servers } from '../db/schema';
@@ -121,7 +122,7 @@ export const serversRouter = router({
         })
         .from(servers)
         .where(and(eq(servers.id, input.serverId), eq(servers.visibility, 'public')));
-      if (!server) throw new Error('SERVER_NOT_FOUND');
+      if (!server) throw new TRPCError({ code: 'NOT_FOUND', message: 'Server not found or not joinable' });
       // Check if already a member (race-safe: try insert, catch unique error)
       await ensureUserExists(db, userId);
       try {
@@ -133,7 +134,7 @@ export const serversRouter = router({
       } catch (err: any) {
         // Drizzle/PG unique violation
         if (err.code === '23505') {
-          throw new Error('ALREADY_MEMBER');
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Already a member' });
         }
         throw err;
       }

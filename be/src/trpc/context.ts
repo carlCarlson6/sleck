@@ -19,7 +19,9 @@ export type Context = inferAsyncReturnType<typeof createContext>;
 const t = initTRPC.context<Context>().create();
 export const router = t.router;
 export const publicProcedure = t.procedure;
+import { TRPCError } from '@trpc/server';
+
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
-  if (!ctx.user) throw new Error('UNAUTHORIZED');
+  if (!ctx.user) throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Not authenticated' });
   return next({ ctx });
 });
