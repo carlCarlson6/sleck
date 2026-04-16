@@ -32,6 +32,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a new server
+      operationId: createServer
+      tags: [servers]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateServerInput'
+      responses:
+        '201':
+          description: Server created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerSummary'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /servers/public:
     get:
       summary: List public servers (discovery)
@@ -72,35 +101,6 @@ paths:
                 $ref: '#/components/schemas/ServerSummary'
         '400':
           description: Invalid input or already a member
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: Not authenticated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    post:
-      summary: Create a new server
-      operationId: createServer
-      tags: [servers]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateServerInput'
-      responses:
-        '201':
-          description: Server created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ServerSummary'
-        '400':
-          description: Invalid input
           content:
             application/json:
               schema:
