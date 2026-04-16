@@ -32,6 +32,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /servers/public:
+    get:
+      summary: List public servers (discovery)
+      operationId: listPublicServers
+      tags: [servers, discovery]
+      responses:
+        '200':
+          description: List of public servers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServerSummary'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /servers/public/join:
+    post:
+      summary: Join a public server
+      operationId: joinPublicServer
+      tags: [servers, discovery]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JoinPublicServerInput'
+      responses:
+        '200':
+          description: Joined server summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerSummary'
+        '400':
+          description: Invalid input or already a member
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     post:
       summary: Create a new server
       operationId: createServer
@@ -86,6 +136,14 @@ components:
         createdAt:
           type: string
           format: date-time
+    JoinPublicServerInput:
+      type: object
+      required:
+        - serverId
+      properties:
+        serverId:
+          type: string
+          format: uuid
     CreateServerInput:
       type: object
       required:

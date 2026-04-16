@@ -5,7 +5,7 @@
 - Overall status: **In Progress**
 - Discovery and join backend — **Done** (**Salva**)
 - Discovery UI — **Done** (**Aitor**)
-- Contract update — **Pending** (**Isabel**)
+- Contract update — **Done** (**Isabel**)
 - Review — **Pending** (**Juanjo**)
 
 ## Problem statement
