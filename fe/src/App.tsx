@@ -7,20 +7,34 @@ import { SignedOutLayout } from './layouts/SignedOutLayout';
 import { LoadingLayout } from './layouts/LoadingLayout';
 import { EmptyStateLayout } from './layouts/EmptyStateLayout';
 
-const isEmpty = false;
+import { useAppState } from './state/appState';
+import { ServerDiscovery } from './ServerDiscovery';
 
 function AppShell() {
   const { isLoaded, isSignedIn } = useClerkSeamAuth();
   const isLoading = !isLoaded;
+  const { currentServerId } = useAppState();
 
-  return isLoading ? (
-    <LoadingLayout />
-  ) : isSignedIn ? (
+  if (isLoading) return <LoadingLayout />;
+  if (!isSignedIn) return <SignedOutLayout />;
+
+  // If user has not joined any servers, show discovery as main content
+  if (!currentServerId) {
+    return (
+      <SignedInLayout>
+        <EmptyStateLayout>
+          <ServerDiscovery />
+        </EmptyStateLayout>
+      </SignedInLayout>
+    );
+  }
+
+  // Otherwise, show main app content (placeholder for now)
+  return (
     <SignedInLayout>
-      {isEmpty ? <EmptyStateLayout /> : <div>Welcome to Sleck!</div>}
+      {/* TODO: Replace with server/channel experience */}
+      <div>Welcome to Sleck!</div>
     </SignedInLayout>
-  ) : (
-    <SignedOutLayout />
   );
 }
 
