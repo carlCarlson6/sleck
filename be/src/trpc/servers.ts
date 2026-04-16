@@ -1,7 +1,8 @@
 import { z } from 'zod';
 import { protectedProcedure, router } from './context';
 import { db } from '../db';
-import { memberships, servers, users } from '../db/schema';
+import { memberships, servers } from '../db/schema';
+import { ensureUserExists } from './ensureUserExists';
 import { eq, and } from 'drizzle-orm';
 
 // Zod schemas
@@ -28,19 +29,7 @@ export const serversRouter = router({
       // Authz: user must be authenticated (enforced by protectedProcedure)
       const userId = ctx.user!.id;
       return db.transaction(async (tx) => {
-        const existingUser = await tx
-          .select({ id: users.id })
-          .from(users)
-          .where(eq(users.id, userId))
-          .limit(1);
-
-        if (existingUser.length === 0) {
-          await tx.insert(users).values({
-            id: userId,
-            email: `${userId}@sleck.local`,
-            displayName: `Demo User ${userId.slice(0, 8)}`,
-          });
-        }
+        await ensureUserExists(tx, userId);
 
         const [server] = await tx
           .insert(servers)
@@ -94,7 +83,7 @@ export const serversRouter = router({
 
   listPublic: protectedProcedure
     .output(listServersOutput)
-    .query(async ({ ctx }) => {
+    .query(async () => {
       // Authz: user must be authenticated (enforced by protectedProcedure)
       // Only public servers, regardless of membership
       const rows = await db
@@ -142,7 +131,8 @@ export const serversRouter = router({
       if (existing.length > 0) {
         throw new Error('ALREADY_MEMBER');
       }
-      // Insert membership
+      // Ensure user exists before inserting membership
+      await ensureUserExists(db, userId);
       await db.insert(memberships).values({
         userId,
         serverId: server.id,
