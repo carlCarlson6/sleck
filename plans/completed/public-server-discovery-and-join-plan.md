@@ -2,11 +2,11 @@
 
 ## Execution status
 
-- Overall status: **In Progress**
+- Overall status: **Completed**
 - Discovery and join backend — **Done** (**Salva**)
 - Discovery UI — **Done** (**Aitor**)
 - Contract update — **Done** (**Isabel**)
-- Review — **Pending** (**Juanjo**)
+- Review — **Done** (**Juanjo**)
 
 ## Problem statement
 
