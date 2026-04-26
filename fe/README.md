@@ -15,10 +15,11 @@ This is the minimal frontend scaffold for Sleck, built with [Vite](https://vitej
 ## Environment Variables
 
 - `VITE_BACKEND_BASE_URL`: Base URL for the Sleck backend (default: http://localhost:3001)
+- `VITE_CLERK_PUBLISHABLE_KEY`: Clerk publishable key used by the frontend auth UI
 
   When running in Docker Compose, this is set automatically to `http://localhost:3001`.
 
-Copy `.env.example` to `.env` and adjust as needed.
+Copy `.env.example` to `.env`, replace the Clerk placeholder with your real publishable key, and adjust the backend URL as needed.
 
 ## Structure
 
@@ -27,5 +28,5 @@ Copy `.env.example` to `.env` and adjust as needed.
 
 ## Notes
 
-- This is a minimal, accessible scaffold. No business logic, state management, or auth is included yet.
+- This is a minimal, accessible scaffold with Clerk-based auth gating for signed-in and signed-out states.
 - See the root README for project-wide instructions.
