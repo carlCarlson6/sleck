@@ -1,7 +1,7 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
-import React from 'react';
+import { SignedIn, SignedOut, SignInButton } from '@clerk/clerk-react';
+import type { ReactNode } from 'react';
 
-export function AuthShell({ children }: { children: React.ReactNode }) {
+export function AuthShell({ children }: { children: ReactNode }) {
   return (
     <>
       <SignedOut>
