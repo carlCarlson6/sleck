@@ -21,6 +21,10 @@ Apply these rules when generating or editing code for this repository:
 - Use Zod to validate untrusted data at boundaries.
 - Keep channel, server, and membership permissions visible in component and route design.
 - Prefer accessible, keyboard-friendly interaction patterns for chat and navigation UI.
+- Default the UI direction to a minimalistic, high-contrast interface with a terminal or console-inspired feel.
+- Use restrained cyber-punk accents for emphasis, but keep the overall layout clean, sparse, and readable.
+- Favor dark surfaces, clear borders, monospaced or terminal-friendly typography accents, and explicit focus or active states.
+- Treat the visual theme as a product-level default across server lists, channel panels, message feeds, composer areas, and dialogs.
 
 ## Backend
 

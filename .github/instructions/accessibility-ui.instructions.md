@@ -26,6 +26,11 @@ applyTo: '**/*.{tsx,jsx,css,scss,md}'
 
 ## Visual behavior
 
+- Default to a minimalistic UI with a terminal or console-inspired visual language.
+- Use cyber-punk styling as restrained accenting rather than decorative overload.
+- Keep the application high contrast by default, with clear separation between surfaces, borders, text, and interactive states.
+- Prefer readable dark themes, crisp outlines, and sparse layouts over dense or low-contrast presentation.
+- Use accent colors consistently for actions, status, and focus, but ensure the interface remains understandable without them.
 - Do not rely on color alone to communicate status, role, or validation.
 - Maintain sufficient contrast for text, icons, badges, and interactive states.
 - Respect reduced-motion preferences for animated chat or presence UI.
