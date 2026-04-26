@@ -1,5 +1,5 @@
 import type { Request } from 'express';
-import { clerkClient, type WithAuthProp } from '@clerk/clerk-sdk-node';
+import { clerkClient, getAuth } from '@clerk/express';
 import type { inferAsyncReturnType } from '@trpc/server';
 import type { CreateExpressContextOptions } from '@trpc/server/adapters/express';
 
@@ -21,8 +21,7 @@ export type SleckContext = {
 };
 
 export async function createContext({ req }: CreateExpressContextOptions): Promise<SleckContext> {
-  const authReq = req as WithAuthProp<Request>;
-  const userId = authReq.auth?.userId;
+    const { userId } = getAuth(req);
 
   if (!userId) {
     return { req, user: null };

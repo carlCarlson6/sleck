@@ -1,5 +1,5 @@
 import express from 'express';
-import { ClerkExpressWithAuth } from '@clerk/clerk-sdk-node';
+import { clerkMiddleware } from '@clerk/express';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { appRouter } from './trpc/root';
 import { createContext } from './trpc/context';
@@ -11,7 +11,7 @@ app.get('/health', (_req, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
-app.use('/trpc', ClerkExpressWithAuth(), createExpressMiddleware({
+app.use('/trpc', clerkMiddleware(), createExpressMiddleware({
   router: appRouter,
   createContext,
 }));

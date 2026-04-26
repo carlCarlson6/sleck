@@ -20,7 +20,7 @@ A health endpoint is available at `/health`.
 
 ## Environment
 
-The backend requires `DATABASE_URL` and `CLERK_SECRET_KEY` in its environment. See `.env.example` for required variables. If running in Docker Compose, `DATABASE_URL` is provided from `infrastructure/.env`, but you must provide your Clerk secret key in `.env` or via Compose overrides.
+The backend requires `DATABASE_URL`, `CLERK_SECRET_KEY`, and `CLERK_PUBLISHABLE_KEY` in its environment. See `.env.example` for required variables. If running in Docker Compose, `DATABASE_URL` is provided from `infrastructure/.env`, but you must provide your Clerk secret and publishable keys in `.env` or via Compose overrides.
 
 ### Docker Compose
 
