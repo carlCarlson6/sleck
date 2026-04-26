@@ -95,6 +95,7 @@ This repository is currently in the planning and scaffolding stage. The product 
 | Plan ID | Plan name                           | Status      |
 |---------|-------------------------------------|-------------|
 | PLN-001 | Initial repository scaffolding plan | Completed |
+| PLN-002 | Core collaboration features implementation plan | Draft |
 
 See `plans/` for full plan details and status updates.
 

@@ -1,0 +1,86 @@
+# PLN-002 - Core collaboration features implementation plan
+
+## Plan ID
+
+PLN-002
+
+## Status
+
+Draft
+
+## Current state snapshot
+
+- `fe/` is still the default Vite/React starter app with no Clerk, routing, tRPC client, server workspace UI, or chat experience.
+- `be/` only exposes an Express `/health` endpoint and does not yet include tRPC procedures, Clerk verification, Drizzle models, or messaging APIs.
+- Docker Compose exists for local full-stack development, but the application slices for auth, servers, channels, and chat are not implemented yet.
+
+## Problem statement
+
+Plan the next implementation work so Sleck can progress from scaffold to a usable collaboration product with four enforced phases: Clerk login, server management, channel management, and real-time channel chat.
+
+## Proposed approach
+
+Use one master plan with strictly ordered phases. Each phase ships a vertical slice with explicit backend, frontend, and review ownership, and later phases remain blocked until the prior phase has passed review.
+
+## Assumptions and open questions
+
+- Clerk is the authentication provider for both frontend session UX and backend identity verification.
+- Real-time chat is required in the first chat slice and will use Server-Sent Events for message delivery plus authenticated write mutations for sending messages.
+- Server management includes server creation, listing, editing, deletion, public discoverability, public join flow, private invite-only membership, and membership-aware authorization.
+- Channel management is limited to server-owner CRUD for channels; moderation roles beyond ownership are out of scope for this plan.
+- Channel chat includes message creation, channel history loading, live delivery, and reconnect-safe backfill. Editing, deletion, reactions, threads, attachments, and presence are out of scope.
+- If contract changes become necessary later, they must be handed off to Isabel and tracked as separate work.
+
+## Task breakdown
+
+1. **Vicente** — Prepare cross-service foundation for the feature program: add required dependency and environment planning for Clerk, tRPC, Drizzle, and PostgreSQL usage; align local development and documentation so later slices can build on a consistent base. **Status:** Pending
+2. **Salva** — Implement backend authentication foundation: Express/tRPC wiring, authenticated context creation, Clerk token verification, protected procedure helpers, and application-side identity plumbing. **Status:** Pending
+3. **Aitor** — Implement frontend authentication foundation: Clerk provider setup, signed-in/signed-out entry flows, guarded app shell, and the first authenticated navigation frame for the product. **Status:** Pending
+4. **Juanjo** — Review Phase 1 for auth correctness, secret handling, build readiness, and unauthorized access gaps. **Status:** Pending
+5. **Salva** — Implement backend server management slice: server, membership, and invite data modeling; APIs for create/read/update/delete; public discovery and join; private invite-only membership; and ownership/membership authorization rules. **Status:** Pending
+6. **Aitor** — Implement frontend server management UX: create server flow, server list/discovery, join flow for public servers, invite acceptance entry points for private servers, and owner-facing server settings screens. **Status:** Pending
+7. **Juanjo** — Review Phase 2 for public/private boundary correctness, authorization coverage, and API/UI consistency. **Status:** Pending
+8. **Salva** — Implement backend channel management slice: channel data model, owner-only channel CRUD procedures, membership-gated channel reads, and channel ordering/selection rules within servers. **Status:** Pending
+9. **Aitor** — Implement frontend channel management UX inside the server workspace: channel list, create/edit/delete dialogs, selection state, and empty/error states consistent with permissions. **Status:** Pending
+10. **Juanjo** — Review Phase 3 for channel authorization, security, and product behavior regressions. **Status:** Pending
+11. **Vicente** — Add the real-time transport foundation for chat using Server-Sent Events, including local development/runtime considerations, connection lifecycle expectations, and any required environment or deployment adjustments. **Status:** Pending
+12. **Salva** — Implement backend channel chat slice: message persistence model, membership-gated history reads, send-message mutations, SSE publication pipeline, and reconnect/backfill behavior. **Status:** Pending
+13. **Aitor** — Implement frontend channel chat UX: history loading, message composer, live stream subscription handling, optimistic/send states, and accessible status/error feedback for the active channel. **Status:** Pending
+14. **Juanjo** — Review Phase 4 and overall readiness for the collaboration baseline: chat authorization, transport abuse risks, build/config issues, and cross-phase regressions. **Status:** Pending
+
+## Dependencies
+
+- Task 2 depends on task 1.
+- Task 3 depends on task 1.
+- Task 4 depends on tasks 2 and 3.
+- Task 5 depends on task 4.
+- Task 6 depends on task 5.
+- Task 7 depends on task 6.
+- Task 8 depends on task 7.
+- Task 9 depends on task 8.
+- Task 10 depends on task 9.
+- Task 11 depends on task 10.
+- Task 12 depends on task 11.
+- Task 13 depends on task 12.
+- Task 14 depends on task 13.
+
+## Risks and edge cases
+
+- Clerk identity must be mapped cleanly into application ownership and membership checks without trusting client-supplied user IDs.
+- Public server discovery must not leak private server metadata, invite details, or channel contents.
+- Membership checks must gate both channel history reads and message writes; joining a public server must remain distinct from merely discovering it.
+- SSE connections must authenticate correctly, recover on reconnect, and avoid leaking messages across servers or channels.
+- Message ordering, duplicate delivery on reconnect, and initial history/backfill boundaries need explicit handling to keep chat reliable.
+- The scaffold currently lacks most target-stack dependencies, so the foundation phase must avoid introducing conflicting abstractions that slow later slices.
+
+## Validation strategy
+
+- Phase 1: verify authenticated and unauthenticated flows, protected backend entrypoints, and local configuration for Clerk-backed login.
+- Phase 2: verify public server discovery/join, private invite-only membership, owner-only server settings, and denied access paths.
+- Phase 3: verify owner-only channel CRUD, membership-based channel visibility, and stable workspace navigation states.
+- Phase 4: verify two-member live chat delivery in a shared channel, denied access for non-members, reconnect-safe history/backfill, and accessible composer/status behavior.
+- Run the documented backend/frontend build and validation commands at each phase, then complete a Juanjo review gate before unlocking the next phase.
+
+## Next task referral
+
+If this plan is approved for execution, the first task should be assigned to **Vicente**.
