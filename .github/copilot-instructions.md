@@ -6,11 +6,9 @@
   - `be/` (backend, Node.js/TypeScript/Express/tRPC)
   - `fe/` (frontend, Vite/React/TypeScript)
   - `infrastructure/` (Docker Compose, infra config)
-  - `contracts/` (OpenAPI contracts, Isabel-governed)
   - `plans/` (plan register and execution plans)
 - Local build, test, and dev commands exist in both `be/` and `fe/` (see their READMEs).
 - Docker Compose infrastructure is provided for local full-stack development.
-- Contract governance and Isabel agent rules are enforced for all changes to `contracts/`.
 - Copilot-facing assets live in `.github/instructions/`, `.github/agents/`, `.github/skills/`, `.github/hooks/`, and `AGENTS.md`.
 
 ## Build, test, and lint commands
@@ -23,7 +21,7 @@
 
 ## High-level architecture
 
-- The repository is organized into backend (`be/`), frontend (`fe/`), infrastructure (`infrastructure/`), contracts (`contracts/`), and plans (`plans/`).
+- The repository is organized into backend (`be/`), frontend (`fe/`), infrastructure (`infrastructure/`), and plans (`plans/`).
 - Frontend stack: Vite, React, TypeScript, Zustand, Zod, TanStack Query, tRPC, Clerk.
 - Backend stack: Node.js, TypeScript, Express, tRPC, Drizzle, PostgreSQL, Clerk.
 - See each service's README for details and commands.
@@ -58,6 +56,5 @@ When agents execute an approved plan, they **must** commit changes according to 
 - VS Code workspace recommendations: `.vscode/extensions.json` and `.vscode/settings.json`.
 - GitHub collaboration tooling: PR template, markdown line-ending check, spelling check, Copilot setup steps.
 - Use `.github/instructions/` for stack-specific guidance, `.github/agents/` for agent roles, `.github/skills/` for reusable workflows.
-- Only Isabel may modify `contracts/`; all other agents must hand off contract changes.
 - All agent commits must follow `AGENT_COMMIT_CONVENTIONS.md`.
 - The optional `.github/hooks/secrets-scanner/` helps prevent secret leaks.

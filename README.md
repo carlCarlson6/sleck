@@ -101,9 +101,8 @@ See `plans/` for full plan details and status updates.
 
 ## Where to find:
 - Plans: `plans/` (with register above)
-- Contract governance: `contracts/README.md`
 - Agent commit conventions: `AGENT_COMMIT_CONVENTIONS.md`
-- Agent roles: `AGENTS.md` and `agents/`
+- Agent roles: `AGENTS.md` and `.github/agents/`
 
 ## Repository tooling
 
@@ -126,10 +125,9 @@ Adapted from patterns used in `github/awesome-copilot`, this repository includes
 This repository also includes a curated Copilot asset set adapted for this specific project:
 
 - `.github/instructions/` for stack, security, accessibility, and testing guidance
-- `.github/agents/` for specialist agents: Danny (planning/orchestration), Aitor (frontend), Salva (backend), Vicente (devops), Juanjo (changes review), and Isabel (contracts)
+- `.github/agents/` for specialist agents: Danny (planning/orchestration), Aitor (frontend), Salva (backend), Vicente (devops), and Juanjo (changes review)
 - `.github/skills/` for architecture blueprints and feature-slice planning
 - `.github/hooks/secrets-scanner/` for optional secret scanning at the end of Copilot-driven sessions
 - `AGENTS.md` as a repo-level guide to the asset layout and intended usage
 - `AGENT_COMMIT_CONVENTIONS.md` for required agent commit message format
-- `contracts/` for OpenAPI contract source of truth (see `contracts/README.md`)
 - `plans/` for approved execution plans and plan register

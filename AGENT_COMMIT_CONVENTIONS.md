@@ -11,7 +11,7 @@ All Copilot agents must follow these conventions for git commits:
 ## Commit subject
 
 - Format: `[agent_name] | brief description`
-- Example: `[Vicente] | Add contract ownership docs`
+- Example: `[Salva] | Add auth context helpers`
 
 ## Commit body
 
@@ -24,12 +24,12 @@ Must include:
 ### Example
 
 ```
-[Isabel] | Update auth contract
+[Salva] | Add auth context helpers
 
 Plan ID: PLN-001
 Plan: Initial repository scaffolding plan
-Agent: Isabel
-Task: Updated OpenAPI contract for auth endpoints to add password reset flow per plan step 3.
+Agent: Salva
+Task: Added backend auth context helpers so protected procedures can resolve the authenticated user consistently.
 ```
 
 ## Why this matters

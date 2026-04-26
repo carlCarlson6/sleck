@@ -12,13 +12,12 @@ This repository includes GitHub Copilot assets tailored for a Slack/Discord/Team
 
 - `.github/copilot-instructions.md` contains the project-wide baseline rules.
 - `.github/instructions/` contains focused instructions for stack, security, accessibility, and testing.
-- `.github/agents/` contains specialist agents: Danny (planning/orchestration), Aitor (frontend), Salva (backend), Vicente (devops), Juanjo (changes review), and Isabel (contracts).
+- `.github/agents/` contains specialist agents: Danny (planning/orchestration), Aitor (frontend), Salva (backend), Vicente (devops), and Juanjo (changes review).
 - `.github/skills/` contains reusable workflows for architecture and feature slicing.
 - `.github/hooks/` contains optional Copilot hook integrations, including a secrets scanner.
 
-## Agent roles and contract rules
+## Agent roles and workflow rules
 
-- **Isabel** is the only agent allowed to directly modify files under `contracts/` (including all `*.yml` and `*.yaml` files). All other agents must hand off contract changes to Isabel and may not edit or commit changes to `contracts/` directly.
 - All agent commits must follow the conventions in `AGENT_COMMIT_CONVENTIONS.md`.
 - Every approved plan must have a stable plan identifier in the format `PLN-###`, recorded in the plan document and in the plan register.
 - When executing an approved plan, agents **must** use the commit subject and body format described in `AGENT_COMMIT_CONVENTIONS.md` (plan ID, plan name, agent, task description). Do not invent new formats for plan-driven work.
@@ -38,4 +37,4 @@ This repository includes GitHub Copilot assets tailored for a Slack/Discord/Team
 - Prefer strongly typed boundaries with Zod and TypeScript instead of implicit contracts.
 - Update `README.md` and Copilot assets when the stack, architecture, or workflow changes materially.
 
-See `plans/`, `contracts/`, and `AGENT_COMMIT_CONVENTIONS.md` for more on agent responsibilities and plan tracking.
+See `plans/` and `AGENT_COMMIT_CONVENTIONS.md` for more on agent responsibilities and plan tracking.
