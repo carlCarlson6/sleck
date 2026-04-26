@@ -84,6 +84,8 @@ Use one master plan with review-gated phases and explicit parallel implementatio
   - Auth errors are surfaced as tRPC `UNAUTHORIZED` errors (code: 'UNAUTHORIZED', message: 'Authentication required')
   - No silent fallback to partial context
 - **/health endpoint:** remains at `/health` (public)
+- Backend auth now runs through Clerk's Express middleware before tRPC context creation, and the backend still preserves `/health` as a public endpoint.
+- Phase 1 backend foundation includes a concrete public procedure (`publicHello`) and protected procedure (`whoami`) for frontend integration and auth verification.
 ---
 
 3. **Aitor** — Implement frontend authentication foundation: Clerk provider setup, signed-in/signed-out entry flows, guarded app shell, and the first authenticated navigation frame for the product. **Status:** Complete
