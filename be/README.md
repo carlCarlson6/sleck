@@ -21,3 +21,7 @@ A health endpoint is available at `/health`.
 ## Environment
 
 No environment variables are required for this minimal scaffold. See `.env.example`.
+
+### Docker Compose
+
+When running under Docker Compose, the backend is available on port 3001 and connects to the `db` service (PostgreSQL) at `postgres://sleck:sleckdev@db:5432/sleck` (set as `DATABASE_URL` for future use).

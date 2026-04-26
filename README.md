@@ -76,6 +76,8 @@ This repository provides a development-oriented Docker Compose setup under `infr
 
 - All secrets and sensitive values should be set in `.env` files (not committed). See `.env.example` in each service for required variables.
 - The Compose file wires reasonable defaults for local development. No `db.env` file is required; all Postgres defaults are set inline for dev. Adjust as needed for your workflow.
+- The backend runs on port 3001, and the frontend on port 5173, matching the minimal scaffold and Docker Compose config.
+- The frontend uses `VITE_BACKEND_BASE_URL` (not `VITE_API_URL`).
 
 ### Stopping and cleaning up
 
