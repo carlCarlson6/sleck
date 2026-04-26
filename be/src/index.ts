@@ -1,3 +1,4 @@
+import './env-load';
 import express from 'express';
 import { clerkMiddleware } from '@clerk/express';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';

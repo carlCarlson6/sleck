@@ -62,7 +62,7 @@ This repository provides a development-oriented Docker Compose setup under `infr
 4. From the `infrastructure/` directory, run:
    - `docker compose up --build`
 
-> **Important:** Docker Compose now reads its local-development variables from `infrastructure/.env`, which is gitignored. Start by copying `infrastructure/.env.example` to `infrastructure/.env`, then replace the Clerk placeholder with your real publishable key from Clerk dashboard. The frontend will not boot without this value.
+> **Important:** Docker Compose now reads its local-development variables from `infrastructure/.env`, which is gitignored. Start by copying `infrastructure/.env.example` to `infrastructure/.env`, then replace the Clerk placeholders with your real secret and publishable keys from the Clerk dashboard. Both the backend and frontend require these values to boot.
 
 - The frontend will be available at [http://localhost:5173](http://localhost:5173)
 - The backend API will be available at [http://localhost:3001](http://localhost:3001)
