@@ -38,6 +38,7 @@ services:
     restart: unless-stopped
     environment:
       VITE_BACKEND_BASE_URL: http://localhost:3001
+      VITE_CLERK_PUBLISHABLE_KEY: pk_test_your_clerk_publishable_key # Replace with your Clerk publishable key
     ports:
       - "5173:5173"
     volumes:

@@ -20,7 +20,7 @@ A health endpoint is available at `/health`.
 
 ## Environment
 
-No environment variables are required for this minimal scaffold. See `.env.example`.
+The backend requires `DATABASE_URL` and `CLERK_SECRET_KEY` in its environment. See `.env.example` for required variables. If running in Docker Compose, `DATABASE_URL` is set automatically, but you must provide your Clerk secret key in `.env` or via Compose overrides.
 
 ### Docker Compose
 

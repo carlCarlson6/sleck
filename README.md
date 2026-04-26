@@ -61,6 +61,8 @@ This repository provides a development-oriented Docker Compose setup under `infr
    - `docker compose up --build`
 
 > **Note:** The Docker Compose setup works out of the box for local development without requiring `.env` files. All required environment variables for dev are set inline in the Compose file. Use `.env` files only if you need to override defaults.
+>
+> **Important:** You must set your Clerk publishable key in `infrastructure/docker-compose.yml` under the `frontend` service as `VITE_CLERK_PUBLISHABLE_KEY`. The default is a placeholder; replace it with your real key from Clerk dashboard. The frontend will not boot without this value.
 
 - The frontend will be available at [http://localhost:5173](http://localhost:5173)
 - The backend API will be available at [http://localhost:3001](http://localhost:3001)
