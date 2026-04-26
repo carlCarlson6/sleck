@@ -1,6 +1,8 @@
 import { router, publicProcedure, protectedProcedure } from './trpc';
 import { z } from 'zod';
 
+import { serverRouter } from './server.router';
+
 export const appRouter = router({
   publicHello: publicProcedure
     .input(z.object({ name: z.string().optional() }))
@@ -17,6 +19,8 @@ export const appRouter = router({
         profile: ctx.user.clerkUser,
       };
     }),
+
+  server: serverRouter,
 });
 
 export type AppRouter = typeof appRouter;
