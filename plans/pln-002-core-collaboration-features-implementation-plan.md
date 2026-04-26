@@ -6,7 +6,7 @@ PLN-002
 
 ## Status
 
-Draft
+In Progress
 
 ## Current state snapshot
 
@@ -98,7 +98,10 @@ Use one master plan with review-gated phases and explicit parallel implementatio
     - UI is accessible, keyboard-friendly, and visually aligned with the terminal-inspired style guidance.
     - No changes to contracts/ or backend API assumptions for this phase.
 
-4. **Juanjo** — Review Phase 1 for auth correctness, secret handling, build readiness, and unauthorized access gaps. **Status:** Pending
+4. **Juanjo** — Review Phase 1 for auth correctness, secret handling, build readiness, and unauthorized access gaps. **Status:** Blocked
+
+   - Review found a blocking Phase 1 runtime/config mismatch: the current Clerk env contract is incomplete across frontend, backend, Docker Compose, and documentation, so a fresh local setup does not reliably boot the signed-out frontend or public tRPC endpoint.
+   - Required remediation before task 4 can pass: align the actual Clerk runtime requirements across service code, `.env.example` files, Docker Compose defaults, and README guidance; then re-run the Phase 1 review gate.
 5. **Salva** — Implement backend server management slice: server, membership, and invite data modeling; APIs for create/read/update/delete; public discovery and join; private invite-only membership; and ownership/membership authorization rules. **Status:** Pending
 6. **Aitor** — Implement frontend server management UX: create server flow, server list/discovery, join flow for public servers, invite acceptance entry points for private servers, and owner-facing server settings screens. **Status:** Pending
 7. **Juanjo** — Review Phase 2 for public/private boundary correctness, authorization coverage, and API/UI consistency. **Status:** Pending
@@ -160,4 +163,4 @@ Use one master plan with review-gated phases and explicit parallel implementatio
 
 ## Next task referral
 
-If this plan is approved for execution, the first task should be assigned to **Vicente**. After task 1 is complete, Danny should refer tasks 2 and 3 to **Salva** and **Aitor** in parallel.
+The active blocker should be assigned to **Vicente** to align the Phase 1 Clerk runtime contract across service configuration, Docker Compose, and documentation so task 4 can be re-reviewed. Once Juanjo clears task 4, Danny should refer task 5 to **Salva** next for the user-requested limited execution window before manual review.
