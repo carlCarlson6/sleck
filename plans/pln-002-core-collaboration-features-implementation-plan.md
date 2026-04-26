@@ -98,13 +98,22 @@ Use one master plan with review-gated phases and explicit parallel implementatio
     - UI is accessible, keyboard-friendly, and visually aligned with the terminal-inspired style guidance.
     - No changes to contracts/ or backend API assumptions for this phase.
 
-4. **Juanjo** — Review Phase 1 for auth correctness, secret handling, build readiness, and unauthorized access gaps. **Status:** Blocked
+4. **Juanjo** — Review Phase 1 for auth correctness, secret handling, build readiness, and unauthorized access gaps. **Status:** Deferred by user
 
    - Review found a blocking Phase 1 runtime/config mismatch: the current Clerk env contract is incomplete across frontend, backend, Docker Compose, and documentation, so a fresh local setup does not reliably boot the signed-out frontend or public tRPC endpoint.
    - Follow-up remediation aligned Docker Compose and documentation for the frontend Clerk key requirement, but Phase 1 remains blocked because the current backend Clerk middleware still makes `GET /trpc/publicHello` fail with `Publishable key is missing` under the documented backend environment contract.
-   - Required remediation before task 4 can pass: align the actual Clerk runtime requirements across backend auth middleware, service code, `.env.example` files, Docker Compose defaults, and README guidance; then re-run the Phase 1 review gate.
-5. **Salva** — Implement backend server management slice: server, membership, and invite data modeling; APIs for create/read/update/delete; public discovery and join; private invite-only membership; and ownership/membership authorization rules. **Status:** Pending
-6. **Aitor** — Implement frontend server management UX: create server flow, server list/discovery, join flow for public servers, invite acceptance entry points for private servers, and owner-facing server settings screens. **Status:** Pending
+   - User directed Danny to skip this blocked review gate temporarily and continue with implementation tasks 5 and 6 for manual review afterward.
+5. **Salva** — Implement backend server management slice: server, membership, and invite data modeling; APIs for create/read/update/delete; public discovery and join; private invite-only membership; and ownership/membership authorization rules. **Status:** Complete
+
+   - Added backend server-management data model and wiring for servers, memberships, and invites.
+   - Implemented tRPC server procedures for discovery, creation, membership listing, public join, private invite flows, and owner-controlled server updates/deletion.
+   - Server visibility, membership, and ownership boundaries are enforced in the backend slice.
+   - Local task commit: `686c139` (`[Salva] | PLN-002: Implement server management backend slice`).
+6. **Aitor** — Implement frontend server management UX: create server flow, server list/discovery, join flow for public servers, invite acceptance entry points for private servers, and owner-facing server settings screens. **Status:** Complete
+
+   - Implemented the frontend server-management workspace with create, discovery, join, invite-acceptance, and owner-settings flows.
+   - Added UI states reflecting public/private visibility, membership outcomes, and owner-only actions in the authenticated shell.
+   - Local task commit: `6e4d8f9` (`PLN-002: Implement server management frontend slice`).
 7. **Juanjo** — Review Phase 2 for public/private boundary correctness, authorization coverage, and API/UI consistency. **Status:** Pending
 8. **Salva** — Implement backend channel management slice: channel data model, owner-only channel CRUD procedures, membership-gated channel reads, and channel ordering/selection rules within servers. **Status:** Pending
 9. **Aitor** — Implement frontend channel management UX inside the server workspace: channel list, create/edit/delete dialogs, selection state, and empty/error states consistent with permissions. **Status:** Pending
@@ -164,4 +173,4 @@ Use one master plan with review-gated phases and explicit parallel implementatio
 
 ## Next task referral
 
-The active blocker should be assigned to **Vicente** to align the Phase 1 Clerk runtime contract across service configuration, Docker Compose, and documentation so task 4 can be re-reviewed. Once Juanjo clears task 4, Danny should refer task 5 to **Salva** next for the user-requested limited execution window before manual review.
+Tasks 5 and 6 are complete and locally committed for manual user review. Danny should wait for the user's review outcome before resuming the gated sequence, re-running task 4/task 7 reviews, or dispatching any Phase 3 work.
