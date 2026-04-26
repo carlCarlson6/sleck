@@ -95,14 +95,6 @@ This repository is currently in the planning and scaffolding stage. The product 
 
 | Plan name                              | Status    |
 |----------------------------------------|-----------|
-| Initial repository scaffolding plan     | Completed |
-| Core functionality roadmap              | Planned   |
-| Core application foundation plan        | Planned   |
-| Server creation and visibility plan     | Planned   |
-| Public server discovery and join plan   | Completed |
-| Private server invites and membership plan | Planned |
-| Channel management plan                 | Planned   |
-| Channel messaging plan                  | Planned   |
 
 See `plans/` for full plan details and status updates.
 
