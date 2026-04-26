@@ -20,15 +20,18 @@ export const serverMemberships = pgTable('server_memberships', {
   uniqueServerUser: unique().on(table.serverId, table.userId),
 }));
 
-export const serverInvites = pgTable('server_invites', {
+
+// --- CHANNELS ---
+import { pgTable, uuid, text, integer, timestamp } from 'drizzle-orm/pg-core';
+
+export const channels = pgTable('channels', {
   id: uuid('id').primaryKey().defaultRandom(),
   serverId: uuid('server_id').notNull().references(() => servers.id),
-  invitedEmail: text('invited_email').notNull(),
-  invitedBy: text('invited_by').notNull(), // Clerk user id
-  acceptedBy: text('accepted_by'), // Clerk user id
-  acceptedAt: timestamp('accepted_at'),
+  name: text('name').notNull(),
+  description: text('description'),
+  position: integer('position').notNull(), // for ordering
   createdAt: timestamp('created_at').notNull().defaultNow(),
-  expiresAt: timestamp('expires_at'),
-}, (table) => ({
-  uniqueServerEmail: unique().on(table.serverId, table.invitedEmail),
-}));
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+});
+
+// (rest of file unchanged)

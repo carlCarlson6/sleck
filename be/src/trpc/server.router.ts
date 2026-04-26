@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { router, protectedProcedure, publicProcedure } from './trpc';
 import { db } from './db';
-import { servers, serverMemberships, serverInvites } from './schema.server';
+import { servers, serverMemberships, serverInvites, channels } from './schema.server';
 import { eq, and, or } from 'drizzle-orm';
 
 // Zod schemas
@@ -31,7 +31,129 @@ const acceptInviteInput = z.object({
   inviteId: z.string().uuid(),
 });
 
+// --- CHANNELS ---
+
+const createChannelInput = z.object({
+  serverId: z.string().uuid(),
+  name: z.string().min(2).max(64),
+  description: z.string().max(256).optional(),
+});
+
+const updateChannelInput = z.object({
+  channelId: z.string().uuid(),
+  name: z.string().min(2).max(64).optional(),
+  description: z.string().max(256).optional(),
+});
+
+const reorderChannelsInput = z.object({
+  serverId: z.string().uuid(),
+  channelIds: z.array(z.string().uuid()),
+});
+
 export const serverRouter = router({
+  // --- CHANNELS ---
+
+  // List channels (member only)
+  listChannels: protectedProcedure.input(z.object({ serverId: z.string().uuid() })).query(async ({ ctx, input }) => {
+    const { id: userId } = ctx.user;
+    // Must be a member
+    const membership = await db.query.serverMemberships.findFirst({
+      where: and(eq(serverMemberships.serverId, input.serverId), eq(serverMemberships.userId, userId)),
+    });
+    if (!membership) throw new Error('Not a member');
+    // Ordered by position ASC
+    const result = await db.select().from(channels)
+      .where(eq(channels.serverId, input.serverId))
+      .orderBy(channels.position.asc());
+    return result;
+  }),
+
+  // Get channel details (member only)
+  getChannel: protectedProcedure.input(z.object({ channelId: z.string().uuid() })).query(async ({ ctx, input }) => {
+    const { id: userId } = ctx.user;
+    const channel = await db.query.channels.findFirst({ where: eq(channels.id, input.channelId) });
+    if (!channel) throw new Error('Channel not found');
+    // Must be a member of the server
+    const membership = await db.query.serverMemberships.findFirst({
+      where: and(eq(serverMemberships.serverId, channel.serverId), eq(serverMemberships.userId, userId)),
+    });
+    if (!membership) throw new Error('Not a member');
+    return channel;
+  }),
+
+  // Create channel (owner only)
+  createChannel: protectedProcedure.input(createChannelInput).mutation(async ({ ctx, input }) => {
+    const { id: userId } = ctx.user;
+    // Must be owner
+    const server = await db.query.servers.findFirst({ where: eq(servers.id, input.serverId) });
+    if (!server) throw new Error('Server not found');
+    if (server.ownerId !== userId) throw new Error('Not owner');
+    // Find max position
+    const last = await db.select({ position: channels.position })
+      .from(channels)
+      .where(eq(channels.serverId, input.serverId))
+      .orderBy(channels.position.desc())
+      .limit(1);
+    const nextPosition = last.length > 0 ? (last[0].position + 1) : 0;
+    const [channel] = await db.insert(channels).values({
+      serverId: input.serverId,
+      name: input.name,
+      description: input.description,
+      position: nextPosition,
+    }).returning();
+    return { id: channel.id };
+  }),
+
+  // Update channel (owner only)
+  updateChannel: protectedProcedure.input(updateChannelInput).mutation(async ({ ctx, input }) => {
+    const { id: userId } = ctx.user;
+    const channel = await db.query.channels.findFirst({ where: eq(channels.id, input.channelId) });
+    if (!channel) throw new Error('Channel not found');
+    const server = await db.query.servers.findFirst({ where: eq(servers.id, channel.serverId) });
+    if (!server) throw new Error('Server not found');
+    if (server.ownerId !== userId) throw new Error('Not owner');
+    await db.update(channels).set({
+      ...(input.name && { name: input.name }),
+      ...(input.description && { description: input.description }),
+      updatedAt: new Date(),
+    }).where(eq(channels.id, input.channelId));
+    return { success: true };
+  }),
+
+  // Delete channel (owner only)
+  deleteChannel: protectedProcedure.input(z.object({ channelId: z.string().uuid() })).mutation(async ({ ctx, input }) => {
+    const { id: userId } = ctx.user;
+    const channel = await db.query.channels.findFirst({ where: eq(channels.id, input.channelId) });
+    if (!channel) throw new Error('Channel not found');
+    const server = await db.query.servers.findFirst({ where: eq(servers.id, channel.serverId) });
+    if (!server) throw new Error('Server not found');
+    if (server.ownerId !== userId) throw new Error('Not owner');
+    await db.delete(channels).where(eq(channels.id, input.channelId));
+    return { success: true };
+  }),
+
+  // Reorder channels (owner only)
+  reorderChannels: protectedProcedure.input(reorderChannelsInput).mutation(async ({ ctx, input }) => {
+    const { id: userId } = ctx.user;
+    const server = await db.query.servers.findFirst({ where: eq(servers.id, input.serverId) });
+    if (!server) throw new Error('Server not found');
+    if (server.ownerId !== userId) throw new Error('Not owner');
+    // Validate all channelIds belong to this server
+    const found = await db.select().from(channels)
+      .where(eq(channels.serverId, input.serverId));
+    const foundIds = found.map((c) => c.id);
+    if (foundIds.length !== input.channelIds.length || !input.channelIds.every((id) => foundIds.includes(id))) {
+      throw new Error('Channel list mismatch');
+    }
+    // Update positions
+    await Promise.all(input.channelIds.map((id, idx) =>
+      db.update(channels).set({ position: idx }).where(eq(channels.id, id))
+    ));
+    return { success: true };
+  }),
+
+  // --- SERVERS ---
+
   // Discover public servers (no private data leak)
   discover: publicProcedure.query(async () => {
     const result = await db.select().from(servers).where(eq(servers.isPublic, true));
