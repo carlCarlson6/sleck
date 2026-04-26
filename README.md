@@ -92,9 +92,9 @@ This repository is currently in the planning and scaffolding stage. The product 
 
 ## Plan register
 
-| Plan name                              | Status    |
-|----------------------------------------|-----------|
-| Initial repository scaffolding plan    | In progress |
+| Plan ID | Plan name                           | Status      |
+|---------|-------------------------------------|-------------|
+| PLN-001 | Initial repository scaffolding plan | In progress |
 
 See `plans/` for full plan details and status updates.
 

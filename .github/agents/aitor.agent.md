@@ -32,4 +32,4 @@ You are the frontend specialist for Sleck.
 
 ## Commit conventions for plan-driven work
 
-When executing an approved plan, you **must** commit changes according to the repository conventions in `AGENT_COMMIT_CONVENTIONS.md`. Do not invent new formats. The commit subject and body must follow the required structure, including plan name, agent, and task description. This ensures traceability and consistency across all agent-driven work.
+When executing an approved plan, you **must** commit changes according to the repository conventions in `AGENT_COMMIT_CONVENTIONS.md`. Do not invent new formats. The commit subject and body must follow the required structure, including plan ID, plan name, agent, and task description. This ensures traceability and consistency across all agent-driven work.

@@ -16,6 +16,7 @@ All Copilot agents must follow these conventions for git commits:
 ## Commit body
 
 Must include:
+- Plan ID
 - Plan name (as listed in `plans/`)
 - Agent in charge
 - Task description (what was done and why)
@@ -25,6 +26,7 @@ Must include:
 ```
 [Isabel] | Update auth contract
 
+Plan ID: PLN-001
 Plan: Initial repository scaffolding plan
 Agent: Isabel
 Task: Updated OpenAPI contract for auth endpoints to add password reset flow per plan step 3.
