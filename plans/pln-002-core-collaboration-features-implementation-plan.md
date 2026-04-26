@@ -29,7 +29,7 @@ Use one master plan with review-gated phases and explicit parallel implementatio
 - Server management includes server creation, listing, editing, deletion, public discoverability, public join flow, private invite-only membership, and membership-aware authorization.
 - Channel management is limited to server-owner CRUD for channels; moderation roles beyond ownership are out of scope for this plan.
 - Channel chat includes message creation, channel history loading, live delivery, and reconnect-safe backfill. Editing, deletion, reactions, threads, attachments, and presence are out of scope.
-- If contract changes become necessary later, they must be handed off to Isabel and tracked as separate work.
+- If cross-team interface changes become necessary later, they should be documented in the plan and tracked as separate work before implementation continues.
 
 ## Task breakdown
 
@@ -52,8 +52,50 @@ Use one master plan with review-gated phases and explicit parallel implementatio
 - No contract or API shape is defined yet; Salva must publish backend context/auth contract at kickoff for Aitor.
 - No blockers for tasks 2 and 3; both can proceed in parallel from this base.
 ---
-2. **Salva** — Implement backend authentication foundation: Express/tRPC wiring, authenticated context creation, Clerk token verification, protected procedure helpers, and application-side identity plumbing. **Status:** Pending
-3. **Aitor** — Implement frontend authentication foundation: Clerk provider setup, signed-in/signed-out entry flows, guarded app shell, and the first authenticated navigation frame for the product. **Status:** Pending
+2. **Salva** — Implement backend authentication foundation: Express/tRPC wiring, authenticated context creation, Clerk token verification, protected procedure helpers, and application-side identity plumbing. **Status:** Complete
+
+---
+
+### Backend auth/context contract for Aitor (Phase 1)
+
+- **tRPC endpoint path:** `/trpc`
+- **Context shape:**
+  - `req`: IncomingMessage (raw Express request)
+  - `user`: null if unauthenticated, else:
+    - `id`: Clerk user ID (string)
+    - `email`: primary email (string|null)
+    - `clerkUser`:
+      - `id`: Clerk user ID
+      - `emailAddresses`: array of `{ emailAddress: string }`
+      - `firstName`: string|null
+      - `lastName`: string|null
+      - `imageUrl`: string|null
+- **Procedure helpers:**
+  - `publicProcedure`: no auth required
+  - `protectedProcedure`: requires valid Clerk token; throws `UNAUTHORIZED` error if not present/valid
+- **Example procedures:**
+  - `publicHello`: public, input `{ name?: string }`, output `{ message: string }`
+  - `whoami`: protected, no input, output `{ id, email, profile }` (profile = `clerkUser`)
+- **Auth expectations:**
+  - Clerk JWT must be provided as Bearer token (or via Clerk SDK supported means)
+  - If token is missing/invalid, `protectedProcedure` throws `UNAUTHORIZED` (tRPC error)
+  - `publicProcedure` always accessible
+- **Error behavior:**
+  - Auth errors are surfaced as tRPC `UNAUTHORIZED` errors (code: 'UNAUTHORIZED', message: 'Authentication required')
+  - No silent fallback to partial context
+- **/health endpoint:** remains at `/health` (public)
+---
+
+3. **Aitor** — Implement frontend authentication foundation: Clerk provider setup, signed-in/signed-out entry flows, guarded app shell, and the first authenticated navigation frame for the product. **Status:** Complete
+
+    - ClerkProvider is now wired in the frontend bootstrap (main.tsx) using VITE_CLERK_PUBLISHABLE_KEY from environment.
+    - Signed-out users see a high-contrast, accessible sign-in entry point using Clerk's SignInButton (modal mode).
+    - Signed-in users are gated into a guarded app shell, with a minimal navigation frame (AppNavFrame) and placeholder workspace.
+    - No server/channel/chat features are present yet; only the auth foundation and navigation frame.
+    - Consumed backend contract assumptions: Clerk is the auth provider, frontend uses Clerk publishable key, no backend auth API is required for this phase, and no business logic or tRPC wiring is present yet.
+    - UI is accessible, keyboard-friendly, and visually aligned with the terminal-inspired style guidance.
+    - No changes to contracts/ or backend API assumptions for this phase.
+
 4. **Juanjo** — Review Phase 1 for auth correctness, secret handling, build readiness, and unauthorized access gaps. **Status:** Pending
 5. **Salva** — Implement backend server management slice: server, membership, and invite data modeling; APIs for create/read/update/delete; public discovery and join; private invite-only membership; and ownership/membership authorization rules. **Status:** Pending
 6. **Aitor** — Implement frontend server management UX: create server flow, server list/discovery, join flow for public servers, invite acceptance entry points for private servers, and owner-facing server settings screens. **Status:** Pending
@@ -94,7 +136,7 @@ Use one master plan with review-gated phases and explicit parallel implementatio
 1. Danny should dispatch every ready task in the same parallel lane in one orchestration step, with exactly one agent assigned to each task.
 2. The backend or transport owner for a parallel lane must document the contract that unblocks the paired task at kickoff in the plan or handoff context: routes or procedures, key payload shapes, authorization expectations, and any known blockers.
 3. Aitor may proceed on a parallel frontend task from that documented contract and should avoid inventing behavior that conflicts with the plan's public/private server and membership rules.
-4. If a parallel task discovers a contract change that invalidates the paired task, the agent should stop, update the plan, and re-route through Danny before continuing. If a contract file change is required, hand that work to Isabel as a separate task.
+4. If a parallel task discovers an interface change that invalidates the paired task, the agent should stop, update the plan, and re-route through Danny before continuing.
 5. Juanjo should only begin the review task for a phase after every implementation task in that phase's lane is complete and committed according to `AGENT_COMMIT_CONVENTIONS.md`.
 
 ## Risks and edge cases
