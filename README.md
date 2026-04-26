@@ -57,12 +57,12 @@ This repository provides a development-oriented Docker Compose setup under `infr
    - `cp be/.env.example be/.env`
    - `cp fe/.env.example fe/.env`
 2. (Optional) Adjust any secrets or environment variables in your `.env` files.
-3. From the `infrastructure/` directory, run:
+3. From the `infrastructure/` directory, copy `.env.example` to `.env` and update any placeholders you need for local development.
+
+4. From the `infrastructure/` directory, run:
    - `docker compose up --build`
 
-> **Note:** The Docker Compose setup works out of the box for local development without requiring `.env` files. All required environment variables for dev are set inline in the Compose file. Use `.env` files only if you need to override defaults.
->
-> **Important:** You must set your Clerk publishable key in `infrastructure/docker-compose.yml` under the `frontend` service as `VITE_CLERK_PUBLISHABLE_KEY`. The default is a placeholder; replace it with your real key from Clerk dashboard. The frontend will not boot without this value.
+> **Important:** Docker Compose now reads its local-development variables from `infrastructure/.env`, which is gitignored. Start by copying `infrastructure/.env.example` to `infrastructure/.env`, then replace the Clerk placeholder with your real publishable key from Clerk dashboard. The frontend will not boot without this value.
 
 - The frontend will be available at [http://localhost:5173](http://localhost:5173)
 - The backend API will be available at [http://localhost:3001](http://localhost:3001)
@@ -76,8 +76,8 @@ This repository provides a development-oriented Docker Compose setup under `infr
 
 ### Environment variables
 
-- All secrets and sensitive values should be set in `.env` files (not committed). See `.env.example` in each service for required variables.
-- The Compose file wires reasonable defaults for local development. No `db.env` file is required; all Postgres defaults are set inline for dev. Adjust as needed for your workflow.
+- All secrets and sensitive values should be set in `.env` files (not committed). See `.env.example` in each service and `infrastructure/.env.example` for required variables.
+- Docker Compose reads its local defaults from `infrastructure/.env`, keeping the actual values out of `docker-compose.yml`.
 - The backend runs on port 3001, and the frontend on port 5173, matching the minimal scaffold and Docker Compose config.
 - The frontend uses `VITE_BACKEND_BASE_URL` (not `VITE_API_URL`).
 

@@ -1,14 +1,12 @@
-version: '3.9'
-
 services:
   db:
     image: postgres:15-alpine
     container_name: sleck-db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: sleck
-      POSTGRES_PASSWORD: sleckdev
-      POSTGRES_DB: sleck
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
@@ -20,8 +18,7 @@ services:
     container_name: sleck-backend
     restart: unless-stopped
     environment:
-      # Add DATABASE_URL for future use, but not required by minimal scaffold
-      DATABASE_URL: postgres://sleck:sleckdev@db:5432/sleck
+      DATABASE_URL: ${DATABASE_URL}
     ports:
       - "3001:3001"
     volumes:
@@ -37,8 +34,8 @@ services:
     container_name: sleck-frontend
     restart: unless-stopped
     environment:
-      VITE_BACKEND_BASE_URL: http://localhost:3001
-      VITE_CLERK_PUBLISHABLE_KEY: pk_test_your_clerk_publishable_key # Replace with your Clerk publishable key
+      VITE_BACKEND_BASE_URL: ${VITE_BACKEND_BASE_URL}
+      VITE_CLERK_PUBLISHABLE_KEY: ${VITE_CLERK_PUBLISHABLE_KEY}
     ports:
       - "5173:5173"
     volumes:

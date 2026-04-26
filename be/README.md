@@ -20,8 +20,8 @@ A health endpoint is available at `/health`.
 
 ## Environment
 
-The backend requires `DATABASE_URL` and `CLERK_SECRET_KEY` in its environment. See `.env.example` for required variables. If running in Docker Compose, `DATABASE_URL` is set automatically, but you must provide your Clerk secret key in `.env` or via Compose overrides.
+The backend requires `DATABASE_URL` and `CLERK_SECRET_KEY` in its environment. See `.env.example` for required variables. If running in Docker Compose, `DATABASE_URL` is provided from `infrastructure/.env`, but you must provide your Clerk secret key in `.env` or via Compose overrides.
 
 ### Docker Compose
 
-When running under Docker Compose, the backend is available on port 3001 and connects to the `db` service (PostgreSQL) at `postgres://sleck:sleckdev@db:5432/sleck` (set as `DATABASE_URL` for future use).
+When running under Docker Compose, the backend is available on port 3001 and connects to the `db` service (PostgreSQL) using the `DATABASE_URL` value from `infrastructure/.env` (the example value is `postgres://sleck:sleckdev@db:5432/sleck`).

@@ -101,7 +101,8 @@ Use one master plan with review-gated phases and explicit parallel implementatio
 4. **Juanjo** — Review Phase 1 for auth correctness, secret handling, build readiness, and unauthorized access gaps. **Status:** Blocked
 
    - Review found a blocking Phase 1 runtime/config mismatch: the current Clerk env contract is incomplete across frontend, backend, Docker Compose, and documentation, so a fresh local setup does not reliably boot the signed-out frontend or public tRPC endpoint.
-   - Required remediation before task 4 can pass: align the actual Clerk runtime requirements across service code, `.env.example` files, Docker Compose defaults, and README guidance; then re-run the Phase 1 review gate.
+   - Follow-up remediation aligned Docker Compose and documentation for the frontend Clerk key requirement, but Phase 1 remains blocked because the current backend Clerk middleware still makes `GET /trpc/publicHello` fail with `Publishable key is missing` under the documented backend environment contract.
+   - Required remediation before task 4 can pass: align the actual Clerk runtime requirements across backend auth middleware, service code, `.env.example` files, Docker Compose defaults, and README guidance; then re-run the Phase 1 review gate.
 5. **Salva** — Implement backend server management slice: server, membership, and invite data modeling; APIs for create/read/update/delete; public discovery and join; private invite-only membership; and ownership/membership authorization rules. **Status:** Pending
 6. **Aitor** — Implement frontend server management UX: create server flow, server list/discovery, join flow for public servers, invite acceptance entry points for private servers, and owner-facing server settings screens. **Status:** Pending
 7. **Juanjo** — Review Phase 2 for public/private boundary correctness, authorization coverage, and API/UI consistency. **Status:** Pending
