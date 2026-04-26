@@ -31,17 +31,17 @@ The app will let users create and join servers where members communicate through
 - React
 - TypeScript
 
-> **Note:** The initial scaffold is minimal and does not yet include Zustand, Zod, TanStack Query, tRPC, or Clerk. These will be added in future slices.
+> **Note:** The initial scaffold now includes foundation dependencies for tRPC, Drizzle, PostgreSQL, and Clerk in both frontend and backend. Zustand, Zod, and TanStack Query will be added in future slices.
 
 ### Backend
 
 - Node.js
 - TypeScript
 - Express
-- tRPC
-- Drizzle
-- PostgreSQL
-- Clerk
+- tRPC (foundation dependencies installed; not yet wired)
+- Drizzle (foundation dependencies installed; not yet wired)
+- PostgreSQL (local dev via Docker Compose; see below)
+- Clerk (foundation dependencies installed; not yet wired)
 
 ## Local development with Docker
 
@@ -95,7 +95,7 @@ This repository is currently in the planning and scaffolding stage. The product 
 | Plan ID | Plan name                           | Status      |
 |---------|-------------------------------------|-------------|
 | PLN-001 | Initial repository scaffolding plan | Completed |
-| PLN-002 | Core collaboration features implementation plan | Draft |
+| PLN-002 | Core collaboration features implementation plan | In Progress |
 
 See `plans/` for full plan details and status updates.
 

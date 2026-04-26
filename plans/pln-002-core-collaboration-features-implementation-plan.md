@@ -33,7 +33,25 @@ Use one master plan with review-gated phases and explicit parallel implementatio
 
 ## Task breakdown
 
-1. **Vicente** — Prepare cross-service foundation for the feature program: add required dependency and environment planning for Clerk, tRPC, Drizzle, and PostgreSQL usage; align local development and documentation so later slices can build on a consistent base. **Status:** Pending
+1. **Vicente** — Prepare cross-service foundation for the feature program: add required dependency and environment planning for Clerk, tRPC, Drizzle, and PostgreSQL usage; align local development and documentation so later slices can build on a consistent base. **Status:** Complete
+
+   - Installed foundation dependencies for tRPC, Drizzle, PostgreSQL, and Clerk in both backend and frontend (`@trpc/server`, `@trpc/client`, `@trpc/react-query`, `@clerk/clerk-sdk-node`, `@clerk/clerk-react`, `drizzle-orm`, `pg`).
+   - Updated `be/.env.example` and `fe/.env.example` to include required environment variables for Clerk and PostgreSQL.
+   - Updated documentation in `README.md` to reflect the new foundation and local development expectations.
+   - No business logic, auth, or API wiring added yet; only the foundation for later slices.
+   - See "Parallel handoff contract" below for explicit unblocking notes for tasks 2 and 3.
+
+---
+**Parallel handoff contract for tasks 2 and 3:**
+
+- All required foundation dependencies for Clerk, tRPC, Drizzle, and PostgreSQL are now installed in both backend and frontend workspaces.
+- Backend expects `DATABASE_URL` and `CLERK_SECRET_KEY` in its environment (see `be/.env.example`).
+- Frontend expects `VITE_BACKEND_BASE_URL` and `VITE_CLERK_PUBLISHABLE_KEY` in its environment (see `fe/.env.example`).
+- Local development is aligned: Docker Compose provides Postgres on `localhost:5432` (user: `sleck`, password: `sleckdev`, db: `sleck`).
+- No business logic, auth, or tRPC wiring is present yet; Salva and Aitor should begin from this foundation.
+- No contract or API shape is defined yet; Salva must publish backend context/auth contract at kickoff for Aitor.
+- No blockers for tasks 2 and 3; both can proceed in parallel from this base.
+---
 2. **Salva** — Implement backend authentication foundation: Express/tRPC wiring, authenticated context creation, Clerk token verification, protected procedure helpers, and application-side identity plumbing. **Status:** Pending
 3. **Aitor** — Implement frontend authentication foundation: Clerk provider setup, signed-in/signed-out entry flows, guarded app shell, and the first authenticated navigation frame for the product. **Status:** Pending
 4. **Juanjo** — Review Phase 1 for auth correctness, secret handling, build readiness, and unauthorized access gaps. **Status:** Pending
