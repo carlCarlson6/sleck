@@ -6,7 +6,7 @@ PLN-001
 
 ## Status
 
-In progress
+Completed
 
 ## Problem statement
 
@@ -24,8 +24,8 @@ Scaffold the first runnable Sleck stack so the repository matches its documented
 
 1. **Salva** — Scaffold the backend under `be/` with Express, TypeScript, package scripts, environment template, and a minimal health endpoint. **Status:** Done (`bcfb51d`)
 2. **Aitor** — Scaffold the frontend under `fe/` with Vite, React, TypeScript, package scripts, environment template, and a minimal app shell that can target the backend. **Status:** Done (`ebe3a16`)
-3. **Vicente** — Add `infrastructure/docker-compose.yml` and related container configuration so frontend, backend, and PostgreSQL run together locally with safe development defaults. **Status:** Done (`152d244`)
-4. **Juanjo** — Review the scaffold for configuration correctness, secret handling, documentation accuracy, and readiness for the next feature slice. **Status:** In progress
+3. **Vicente** — Add `infrastructure/docker-compose.yml` and related container configuration so frontend, backend, and PostgreSQL run together locally with safe development defaults. **Status:** Done (`152d244`), followed by remediation in `984f152` for clean-clone dependency mounting, Vite host exposure, and README Docker accuracy.
+4. **Juanjo** — Review the scaffold for configuration correctness, secret handling, documentation accuracy, and readiness for the next feature slice. **Status:** Done (initial review found blockers; re-review after `984f152` cleared them with no meaningful remaining issues)
 
 ## Dependencies
 
@@ -45,4 +45,4 @@ Scaffold the first runnable Sleck stack so the repository matches its documented
 - `fe/` builds and starts with documented commands.
 - Docker Compose can run frontend, backend, and PostgreSQL together locally.
 - Repo and service documentation reflect the actual scaffolded workflow.
-- A final review confirms configuration and security basics before the plan is marked complete.
+- Final review completed with no meaningful remaining issues blocking the scaffold.
