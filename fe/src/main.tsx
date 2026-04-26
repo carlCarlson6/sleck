@@ -4,16 +4,15 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 
-const clerkKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-
+const clerkKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY?.trim();
 if (!clerkKey) {
-  throw new Error('Missing Clerk publishable key. Set VITE_CLERK_PUBLISHABLE_KEY in your .env file.');
+  throw new Error('MISSING-ENV');
 }
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ClerkProvider publishableKey={clerkKey}>
-      <App />
-    </ClerkProvider>
+        <App />
+      </ClerkProvider>
   </React.StrictMode>,
 );
