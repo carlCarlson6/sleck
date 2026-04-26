@@ -117,7 +117,6 @@ Adapted from patterns used in `github/awesome-copilot`, this repository includes
 
 ## Key governance and agent rules
 
-- Only Isabel is allowed to directly modify files under `contracts/` (including all `*.yml` and `*.yaml` files). All other agents must hand off contract changes to Isabel and may not edit or commit changes to `contracts/` directly.
 - All agent commits must follow the conventions in `AGENT_COMMIT_CONVENTIONS.md` (commit subject: `[agent_name] | brief description`; commit body: plan name, agent in charge, task description).
 - See `AGENTS.md` for agent roles and responsibilities.
 
