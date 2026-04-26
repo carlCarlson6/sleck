@@ -30,11 +30,8 @@ The app will let users create and join servers where members communicate through
 - Vite
 - React
 - TypeScript
-- Zustand
-- Zod
-- TanStack Query
-- tRPC
-- Clerk
+
+> **Note:** The initial scaffold is minimal and does not yet include Zustand, Zod, TanStack Query, tRPC, or Clerk. These will be added in future slices.
 
 ### Backend
 
@@ -95,6 +92,7 @@ This repository is currently in the planning and scaffolding stage. The product 
 
 | Plan name                              | Status    |
 |----------------------------------------|-----------|
+| Initial repository scaffolding plan    | In progress |
 
 See `plans/` for full plan details and status updates.
 
