@@ -48,7 +48,7 @@ The app will let users create and join servers where members communicate through
 This repository provides a development-oriented Docker Compose setup under `infrastructure/` to run the full stack locally:
 
 - **frontend**: Vite React app (dev server, port 5173)
-- **backend**: Node.js/Express/tRPC API (dev server, port 4000)
+- **backend**: Node.js/Express/tRPC API (dev server, port 3001)
 - **db**: PostgreSQL 15 (port 5432, persistent volume)
 
 ### Quick start
@@ -63,12 +63,12 @@ This repository provides a development-oriented Docker Compose setup under `infr
 > **Note:** The Docker Compose setup works out of the box for local development without requiring `.env` files. All required environment variables for dev are set inline in the Compose file. Use `.env` files only if you need to override defaults.
 
 - The frontend will be available at [http://localhost:5173](http://localhost:5173)
-- The backend API will be available at [http://localhost:4000](http://localhost:4000)
+- The backend API will be available at [http://localhost:3001](http://localhost:3001)
 - The database will be available at `localhost:5432` (user: `sleck`, password: `sleckdev`, db: `sleck`)
 
 ### Service layout
 
-- **frontend**: Hot-reloads on code changes (mounted volume). Uses `VITE_API_URL` to connect to backend.
+- **frontend**: Hot-reloads on code changes (mounted volume). Uses `VITE_BACKEND_BASE_URL` to connect to backend.
 - **backend**: Hot-reloads on code changes (mounted volume). Uses `DATABASE_URL` to connect to Postgres.
 - **db**: Data persisted in a Docker volume (`sleck-db-data`).
 

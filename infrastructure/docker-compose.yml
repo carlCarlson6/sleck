@@ -26,6 +26,7 @@ services:
       - "3001:3001"
     volumes:
       - ../be:/app
+      - /app/node_modules
     depends_on:
       - db
     command: npm run dev
@@ -41,6 +42,7 @@ services:
       - "5173:5173"
     volumes:
       - ../fe:/app
+      - /app/node_modules
     depends_on:
       - backend
     command: npm run dev
