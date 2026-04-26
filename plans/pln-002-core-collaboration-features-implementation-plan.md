@@ -20,7 +20,7 @@ Plan the next implementation work so Sleck can progress from scaffold to a usabl
 
 ## Proposed approach
 
-Use one master plan with strictly ordered phases. Each phase ships a vertical slice with explicit backend, frontend, and review ownership, and later phases remain blocked until the prior phase has passed review.
+Use one master plan with review-gated phases and explicit parallel implementation lanes inside each phase. Each phase ships a vertical slice with explicit backend, frontend, and review ownership, and later phases remain blocked until the prior phase has passed review.
 
 ## Assumptions and open questions
 
@@ -48,21 +48,36 @@ Use one master plan with strictly ordered phases. Each phase ships a vertical sl
 13. **Aitor** — Implement frontend channel chat UX: history loading, message composer, live stream subscription handling, optimistic/send states, and accessible status/error feedback for the active channel. **Status:** Pending
 14. **Juanjo** — Review Phase 4 and overall readiness for the collaboration baseline: chat authorization, transport abuse risks, build/config issues, and cross-phase regressions. **Status:** Pending
 
+## Parallel execution lanes
+
+- **Phase 1 parallel lane:** after task 1 is complete, dispatch tasks 2 and 3 together. Task 4 starts only after both implementation tasks are complete and locally committed.
+- **Phase 2 parallel lane:** after task 4 is complete, dispatch tasks 5 and 6 together. Salva should publish the server-management API and authorization assumptions at kickoff so Aitor can proceed without waiting for task 5 to finish. Task 7 starts only after both implementation tasks are complete and locally committed.
+- **Phase 3 parallel lane:** after task 7 is complete, dispatch tasks 8 and 9 together. Salva should publish the channel-management procedure and permission assumptions at kickoff so Aitor can proceed in parallel. Task 10 starts only after both implementation tasks are complete and locally committed.
+- **Phase 4 staging:** task 11 remains the transport prerequisite. After task 11 is complete, dispatch tasks 12 and 13 together. Vicente and Salva should make the SSE transport, event payload, reconnect, and mutation/query assumptions explicit at kickoff so Aitor can proceed in parallel. Task 14 starts only after tasks 11, 12, and 13 are complete and locally committed.
+
 ## Dependencies
 
 - Task 2 depends on task 1.
 - Task 3 depends on task 1.
 - Task 4 depends on tasks 2 and 3.
 - Task 5 depends on task 4.
-- Task 6 depends on task 5.
-- Task 7 depends on task 6.
+- Task 6 depends on task 4.
+- Task 7 depends on tasks 5 and 6.
 - Task 8 depends on task 7.
-- Task 9 depends on task 8.
-- Task 10 depends on task 9.
+- Task 9 depends on task 7.
+- Task 10 depends on tasks 8 and 9.
 - Task 11 depends on task 10.
 - Task 12 depends on task 11.
-- Task 13 depends on task 12.
-- Task 14 depends on task 13.
+- Task 13 depends on task 11.
+- Task 14 depends on tasks 11, 12, and 13.
+
+## Parallel handoff instructions
+
+1. Danny should dispatch every ready task in the same parallel lane in one orchestration step, with exactly one agent assigned to each task.
+2. The backend or transport owner for a parallel lane must document the contract that unblocks the paired task at kickoff in the plan or handoff context: routes or procedures, key payload shapes, authorization expectations, and any known blockers.
+3. Aitor may proceed on a parallel frontend task from that documented contract and should avoid inventing behavior that conflicts with the plan's public/private server and membership rules.
+4. If a parallel task discovers a contract change that invalidates the paired task, the agent should stop, update the plan, and re-route through Danny before continuing. If a contract file change is required, hand that work to Isabel as a separate task.
+5. Juanjo should only begin the review task for a phase after every implementation task in that phase's lane is complete and committed according to `AGENT_COMMIT_CONVENTIONS.md`.
 
 ## Risks and edge cases
 
@@ -83,4 +98,4 @@ Use one master plan with strictly ordered phases. Each phase ships a vertical sl
 
 ## Next task referral
 
-If this plan is approved for execution, the first task should be assigned to **Vicente**.
+If this plan is approved for execution, the first task should be assigned to **Vicente**. After task 1 is complete, Danny should refer tasks 2 and 3 to **Salva** and **Aitor** in parallel.

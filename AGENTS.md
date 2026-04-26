@@ -24,6 +24,9 @@ This repository includes GitHub Copilot assets tailored for a Slack/Discord/Team
 - When executing an approved plan, agents **must** use the commit subject and body format described in `AGENT_COMMIT_CONVENTIONS.md` (plan ID, plan name, agent, task description). Do not invent new formats for plan-driven work.
 - When an agent completes its assigned task from an approved plan, it **must create a local git commit** for that task before handing off or stopping.
 - Plan-task commits must contain only the changes for that completed task; agents must not sweep unrelated local changes into the commit.
+- Approved plans may define explicit parallel execution lanes. Danny may dispatch all ready tasks in a lane concurrently, but each task must still have exactly one owner.
+- In a parallel lane, the backend or transport owner must publish the contract that unblocks the paired task at kickoff, including relevant APIs or events, payload expectations, authz rules, environment assumptions, and blockers.
+- Juanjo review tasks start only after every implementation task in the lane is complete and locally committed.
 - Commit subject: `[agent_name] | brief description`
 - Commit body: plan ID, plan name, agent in charge, task description
 

@@ -33,6 +33,11 @@ Review changes for security, build issues, configuration problems, code quality 
 - Suggest concrete fixes, not just warnings
 - Provide context for tradeoffs when multiple solutions exist
 
+## Parallel plan execution
+
+- Treat each parallel lane as one review gate: start review only after every implementation task in that lane is complete and locally committed.
+- Review the integration seams between the parallel tasks, especially mismatches in payload shapes, authz assumptions, environment setup, and failure handling.
+
 ## Commit conventions for plan-driven work
 
 When executing an approved plan, you **must** commit changes according to the repository conventions in `AGENT_COMMIT_CONVENTIONS.md`. Do not invent new formats. The commit subject and body must follow the required structure, including plan ID, plan name, agent, and task description. This ensures traceability and consistency across all agent-driven work.

@@ -48,6 +48,9 @@ When agents execute an approved plan, they **must** commit changes according to 
 - When an agent completes its assigned task from an approved plan, it **must create a local git commit** for that task before handoff.
 - The commit must contain only the completed task's changes and must not include unrelated worktree changes.
 - If the task is not complete, the agent must not create the commit yet.
+- Approved plans may define explicit parallel execution lanes. When a lane is marked ready, Danny should dispatch each task in that lane concurrently to different agents while preserving single-agent ownership per task.
+- For a parallel lane, the backend or transport owner must publish the contract that unblocks the paired task at kickoff: relevant procedures or routes, payload shapes, authorization rules, environment assumptions, and known blockers.
+- Review tasks remain sequential gates: Juanjo starts only after every implementation task in the lane is complete and locally committed.
 
 - `.gitignore` covers Node, TypeScript, and web-app artifacts. Node modules and build outputs are ignored; `.env.example` is committed as a template.
 - Environment files: `.env*` is ignored, `.env.example` is committed for each service. Do not commit real `.env` or `db.env` files.
