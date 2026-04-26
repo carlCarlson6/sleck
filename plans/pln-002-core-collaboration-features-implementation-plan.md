@@ -114,9 +114,20 @@ Use one master plan with review-gated phases and explicit parallel implementatio
    - Implemented the frontend server-management workspace with create, discovery, join, invite-acceptance, and owner-settings flows.
    - Added UI states reflecting public/private visibility, membership outcomes, and owner-only actions in the authenticated shell.
    - Local task commit: `6e4d8f9` (`PLN-002: Implement server management frontend slice`).
-7. **Juanjo** — Review Phase 2 for public/private boundary correctness, authorization coverage, and API/UI consistency. **Status:** Pending
-8. **Salva** — Implement backend channel management slice: channel data model, owner-only channel CRUD procedures, membership-gated channel reads, and channel ordering/selection rules within servers. **Status:** Pending
-9. **Aitor** — Implement frontend channel management UX inside the server workspace: channel list, create/edit/delete dialogs, selection state, and empty/error states consistent with permissions. **Status:** Pending
+7. **Juanjo** — Review Phase 2 for public/private boundary correctness, authorization coverage, and API/UI consistency. **Status:** Deferred by user
+
+   - User directed Danny to continue with the next implementation lane for manual review later instead of stopping on the Phase 2 review gate.
+8. **Salva** — Implement backend channel management slice: channel data model, owner-only channel CRUD procedures, membership-gated channel reads, and channel ordering/selection rules within servers. **Status:** Complete
+
+   - Added backend channel management support in the server domain, including channel persistence, ordered channel listing, owner-only CRUD, and reorder operations.
+   - Enforced owner/member/non-member boundaries so only server owners can mutate channels and only members can read them.
+   - Added backend test coverage scaffolding for channel flows.
+   - Local task commit: `f89c813` (`[Salva] | Implement channel management backend (CRUD, reorder, authz, tests)`).
+9. **Aitor** — Implement frontend channel management UX inside the server workspace: channel list, create/edit/delete dialogs, selection state, and empty/error states consistent with permissions. **Status:** Complete
+
+   - Added channel list and selection UX to the frontend workspace, plus owner-facing create/edit/delete flows and permission-aware empty/error states.
+   - Wired the authenticated workspace to show channel management UI using the published backend contract assumptions for list/get/create/update/delete/reorder behavior.
+   - Local task commit: `afd80b9` (`[Aitor] | Implement channel management UI in server workspace`).
 10. **Juanjo** — Review Phase 3 for channel authorization, security, and product behavior regressions. **Status:** Pending
 11. **Vicente** — Add the real-time transport foundation for chat using Server-Sent Events, including local development/runtime considerations, connection lifecycle expectations, and any required environment or deployment adjustments. **Status:** Pending
 12. **Salva** — Implement backend channel chat slice: message persistence model, membership-gated history reads, send-message mutations, SSE publication pipeline, and reconnect/backfill behavior. **Status:** Pending
@@ -173,4 +184,4 @@ Use one master plan with review-gated phases and explicit parallel implementatio
 
 ## Next task referral
 
-Tasks 5 and 6 are complete and locally committed for manual user review. Danny should wait for the user's review outcome before resuming the gated sequence, re-running task 4/task 7 reviews, or dispatching any Phase 3 work.
+Tasks 8 and 9 are complete and locally committed for manual user review. Danny should wait for the user's review outcome before resuming the gated sequence, re-running task 7/task 10 reviews, or dispatching any Phase 4 work.
